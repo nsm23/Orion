@@ -1,0 +1,10 @@
+% extends "layouts/main.html" %}
+{% load hitcount_tags %}
+
+{% block content %}
+  Popular Posts
+  {% for p in popular_posts %}
+  {{p.title}}
+  {% endfor %}
+{% endblock %}
+

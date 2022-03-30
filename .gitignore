@@ -1,0 +1,15 @@
+.vscode
+venv
+__pycache__
+*.code-workspace
+*.sqlite3
+node_modules
+.env
+media/
+*idea/
+static/
+gb_orion/
+
+/orion/orion.sql
+/poetry.lock
+/pyproject.toml

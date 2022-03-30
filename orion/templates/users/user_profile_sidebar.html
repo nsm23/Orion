@@ -1,0 +1,33 @@
+{% load static %}
+
+<div class="mb-3">
+    <img src="{% get_media_prefix %}{{ user.avatar }}" alt="@{{ user.username }}" title="@{{ user.username }}"
+         class="w-100">
+</div>
+{% comment %} <h4 class="mb-3 d-flex justify-content-around">
+    <span title="Публикации"><i class="bi bi-file-earmark-richtext"></i> 25 </span>
+    <span title="Комментарии"><i class="bi bi-chat"></i> 10 </span>
+    <span title="Подписчики"><i class="bi bi-bell"></i> 5 </span>
+</h4> {% endcomment %}
+<ul class="mb-3 px-0 list-group-flush">
+    <li class="list-group-item list-group-item-action">
+        <a href="{% url 'users:user_profile' pk=user.pk section='user_detail' %}"
+           class="{% if section == 'user_detail' %}link-secondary{% else %}link-dark{% endif %}">
+            Персональная информация
+        </a>
+    </li>
+    <li class="list-group-item list-group-item-action">
+        <a href="{% url 'users:user_profile' pk=user.pk section='user_posts' %}"
+           class="{% if section == 'user_posts' %}link-secondary{% else %}link-dark{% endif %}">
+            Публикации
+        </a>
+    </li>
+    {% if request.user == user or request.user.is_superuser %}
+        <li class="list-group-item list-group-item-action">
+            <a href="{% url 'users:user_profile' pk=user.pk section='user_comment_notifications' %}"
+               class="{% if section == 'user_comment_notifications' %}link-secondary{% else %}link-dark{% endif %}">
+                Уведомления
+            </a>
+        </li>
+    {% endif %}
+</ul>

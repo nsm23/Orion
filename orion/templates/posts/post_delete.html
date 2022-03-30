@@ -1,0 +1,13 @@
+{% extends "layouts/main.html" %}
+
+{% block title %} Написать статью {% endblock %}
+
+{% block content %}
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="mb-3">Вы уверены что хотите удалить статью?</div>
+  <button type="submit" class="btn btn-primary">Удалить</button>
+</form>
+
+{% endblock %}

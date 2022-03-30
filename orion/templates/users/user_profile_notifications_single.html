@@ -1,0 +1,24 @@
+<li class="list-group-item d-flex justify-content-between px-0">
+    <div class="col-2">
+        <img src="{{ comment.user.avatar.url }}" class="w-75 rounded-circle">
+    </div>
+    <div class="col-8">
+        <div><strong>@{{ comment.user.username }}</strong></div>
+        <div><small>{{ comment.created_at|date:"d.m.Y H:i" }}</small></div>
+        <div>{{ comment.text }}</div>
+        <div>
+            {% if mark_as_read == 1 %}
+                <a href="{% url 'notifications:mark_as_read_and_redirect' object_model='comment' object_id=comment.id %}">
+                    Перейти к комментарию</a>
+            {% else %}
+                <a href="{% url 'posts:detail' slug=comment.post.slug %}#comment-{{ comment.id }}">
+                    Перейти к комментарию</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-2">
+        <a href="" class="btn btn-sm btn-outline-secondary" title="Пометить прочтенным"
+            data-is-read="false" data-object-id="{{ comment.id }}">
+                <i class="bi bi-check-circle-fill mark-as-read"></i></a>
+    </div>
+</li>

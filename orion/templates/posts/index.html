@@ -1,0 +1,85 @@
+{% extends "layouts/main.html" %}
+{% load hitcount_tags %}
+{% block title %} {{ post.title }} {% endblock %}
+
+{% block content %}
+    <div class="card mb-3 {% if post.status == 'DECLINED' or post.status == 'BANNED' %}border-danger border-3{% endif %}">
+        {% if request.user == post.user or request.user.is_staff %}
+            <div class="card-header bg-white p-0 text-end dropdown">
+                {% if post.status == 'DECLINED' %}
+                    <span class="text-danger">Запрос на публикацию отклонен модератором</span>
+                {% endif %}
+                {% if post.status == 'BANNED' %}
+                    <span class="text-danger">Публикация заблокирована</span>
+                {% endif %}
+                <a href="javascript:void(0)" id="dropdownPost{{ post.id }}" data-bs-toggle="dropdown"
+                   aria-expanded="false" class="btn">
+                    <i class="bi bi-three-dots"></i>
+                </a>
+                {#  Dropdown menu for post actions  #}
+                <ul class="dropdown-menu shadow" aria-labelledby="dropdownMenuClickableOutside"
+                    style="top: 2rem; right: 0; left: unset; z-index: 2000">
+                    {% if request.user == post.user %}
+                        <li><a href="{% url 'posts:edit' slug=post.slug %}" class="dropdown-item">
+                            Редактировать</a></li>
+                    {% endif %}
+                    {% if post.status == 'ON MODERATION' %}
+                        <li><a class="dropdown-item post-approve-link" data-post-id="{{ post.id }}" href="#">
+                            Одобрить публикацию</a></li>
+                        <li><a class="dropdown-item post-decline-link" data-post-id="{{ post.id }}" href="#"
+                               data-post-id="{{ post.id }}" data-bs-toggle="modal" data-bs-target="#decline-post">
+                            Отклонить публикацию</a></li>
+                    {% endif %}
+                {% comment %}
+                    {% if post.status == 'ACTIVE' %}
+                        <li><a class="dropdown-item post-ban-link" data-post-id="{{ post.id }}" href="#">
+                            Заблокировать публикацию</a></li>
+                    {% endif %}
+                {% endcomment %}
+                </ul>
+            </div>
+        {% endif %}
+        {% if post.image %}<img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">{% endif %}
+        <div class="card-body">
+          <h2 class="card-title">{{ post.title }}</h2>
+          {% load humanize %}
+          <h6 class="card-subtitle mb-2 text-muted">
+              <a href="{% url 'users:user_profile' pk=post.user.pk section='user_detail' %}">@{{ post.user.username }}</a> написал статью
+              {% if post.hub %}в хабе «{{ post.hub.title }}» {% endif %}{{ post.created_at|date:"j M Y" }}</h6>
+          <div class="card-text">{{ post.text|safe }}</div>
+          {% load humanize %}
+
+            {#  LIKES BAR  #}
+            {% if post.status == 'ACTIVE' %}
+                {% include 'likes/likedislike.html' %}
+            {% endif %}
+
+          <div class="card-footer text-muted">
+            <div class="bi bi-eye-fill">{%  get_hit_count for post %}</div>
+          </div>
+        </div>
+
+    {#  POST TAG LIST  #}
+    {% include "tags/list.html" with tags=object.tags.all %}
+   {#  TEXT VOICEOVER  #}
+      <button id="speech-button"
+              class="speech-button"
+              data-action="speech"
+              data-id="{{ post.slug }}">
+        <i id="spinner" class=""></i>Озвучить
+      </button>
+      <div id="audio-container"></div>
+    </div>
+
+    {#  COMMENTS  #}
+    {% if post.status == 'ACTIVE' %}
+        {% include "comments/list.html" %}
+    {% endif %}
+    {% include "controls/modal-1-input.html" with modal_id="decline-post" %}
+
+{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static "js/moderation.js" %}"></script>
+{% endblock %}

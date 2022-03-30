@@ -1,0 +1,43 @@
+{% load hitcount_tags %}
+{% for post in post_list %}
+  <div class="card card mb-5">
+    <div class="card-body">
+      <div class="card-header">
+        <a href="{% url 'users:user_profile' pk=post.user.pk section='user_detail' %}">
+          <img src="{{ post.user.avatar.url }}"
+               class="rounded-circle"
+               style="width: 1.5rem;" />
+          <span class="author-link"><b>{{ post.user.username }}</b></span>
+        </a>
+        <span>{{ post.created_at|date:"j M Y" }}</span>
+      </div>
+      <h6 class="card-subtitle mb-2 text-muted mt-1">
+        <div>
+          {% if post.hub %}
+              <a href="{% url 'hubs:hub' slug=post.hub.alias %}">{{ post.hub.title }}</a>
+          {% endif %}
+        </div>
+        <div>
+          {% for tag in post.tags.all %}
+              <a href={% url 'posts:tag' slug=tag.slug %}>#{{ tag.name }}</a>
+          {% endfor %}
+        </div>
+      </h6>
+      <h5 class="card-title">
+        <a href="{% url 'posts:detail' slug=post.slug %}">{{post.title}}</a>
+      </h5>
+      {% if post.image %}
+        <a href="{% url 'posts:detail' slug=post.slug %}">
+          <img src="{{ post.image.url }}" class="img-fluid" alt="{{ post.title }}">
+        </a>
+      {% else %}
+        <hr>
+      {% endif %}
+      <p class="card-text">{{ post.brief_text|safe }}</p>
+      <div class="card-footer text-muted">
+        <div class="bi bi-eye-fill">{%  get_hit_count for post %}</div>
+      </div>
+    </div>
+
+  </div>
+{% endfor %}

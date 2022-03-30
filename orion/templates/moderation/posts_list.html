@@ -1,0 +1,43 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}Статьи на модерации{% endblock %}
+
+{% block content %}
+    <h1 class="mb-5">Модерация публикаций</h1>
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Статья</th>
+            <th>Автор</th>
+            <th></th>
+        </tr>
+        {% for post in posts %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{% url 'posts:detail' slug=post.slug %}" class="text-dark">{{ post.title }}</a></td>
+                <td><a href="{% url 'users:user_profile' section='user_detail' pk=post.user.id %}" class="text-dark">
+                        @{{ post.user }}</a>
+                </td>
+                <td id="moderation-btns-{{ post.id }}">
+                    <a href="" class="btn btn-outline-success post-approve-btn"
+                       title="Одобрить публикацию" data-post-id="{{ post.id }}">
+                        <i class="bi bi-check-circle-fill"></i></a>
+                    <a href="" class="btn btn-outline-danger post-decline-btn"
+                       title="Отклонить публикацию" data-post-id="{{ post.id }}"
+                       data-bs-toggle="modal" data-bs-target="#decline-post">
+                        <i class="bi bi-x-circle-fill"></i></a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4">На модерации нет ни одной публикации</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% include "controls/modal-1-input.html" with modal_id="decline-post" %}
+{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static "js/moderation.js" %}"></script>
+{% endblock %}

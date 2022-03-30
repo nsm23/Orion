@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  database:
+    image: postgres
+    env_file:
+      - ./orion/.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  backend:
+    build: ./orion/
+    command: python /usr/src/orion/orion/manage.py runserver 0.0.0.0:8000
+    env_file:
+      - ./orion/.env
+    volumes:
+      - .:/usr/src/orion
+    ports:
+      - "8000:8000"
+    environment:
+      - ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+    depends_on:
+      - database
+
+  pgadmin:
+    container_name: pgadmin_orion
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - database
+
+volumes:
+  postgres_data:

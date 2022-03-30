@@ -1,0 +1,1538 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.9 (Ubuntu 12.9-0ubuntu0.20.04.1)
+-- Dumped by pg_dump version 12.9 (Ubuntu 12.9-0ubuntu0.20.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO sergey;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO sergey;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id bigint NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO sergey;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO sergey;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO sergey;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO sergey;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- Name: comments_comment; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.comments_comment (
+    id bigint NOT NULL,
+    text text NOT NULL,
+    active boolean NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    modified_at timestamp with time zone NOT NULL,
+    parent_id bigint,
+    post_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.comments_comment OWNER TO sergey;
+
+--
+-- Name: comments_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.comments_comment_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comments_comment_id_seq OWNER TO sergey;
+
+--
+-- Name: comments_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.comments_comment_id_seq OWNED BY public.comments_comment.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id bigint NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO sergey;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO sergey;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO sergey;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO sergey;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.django_migrations (
+    id bigint NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO sergey;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO sergey;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO sergey;
+
+--
+-- Name: hub_hub; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.hub_hub (
+    id bigint NOT NULL,
+    title character varying(64) NOT NULL,
+    alias character varying(64) NOT NULL,
+    sort_order integer NOT NULL
+);
+
+
+ALTER TABLE public.hub_hub OWNER TO sergey;
+
+--
+-- Name: hub_hub_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.hub_hub_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hub_hub_id_seq OWNER TO sergey;
+
+--
+-- Name: hub_hub_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.hub_hub_id_seq OWNED BY public.hub_hub.id;
+
+
+--
+-- Name: likes_likedislike; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.likes_likedislike (
+    id bigint NOT NULL,
+    vote smallint NOT NULL,
+    object_id integer NOT NULL,
+    content_type_id integer NOT NULL,
+    user_id bigint NOT NULL,
+    CONSTRAINT likes_likedislike_object_id_check CHECK ((object_id >= 0))
+);
+
+
+ALTER TABLE public.likes_likedislike OWNER TO sergey;
+
+--
+-- Name: likes_likedislike_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.likes_likedislike_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.likes_likedislike_id_seq OWNER TO sergey;
+
+--
+-- Name: likes_likedislike_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.likes_likedislike_id_seq OWNED BY public.likes_likedislike.id;
+
+
+--
+-- Name: notifications_notification; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.notifications_notification (
+    id bigint NOT NULL,
+    object_id integer NOT NULL,
+    status character varying(8) NOT NULL,
+    content_type_id integer NOT NULL,
+    target_user_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    CONSTRAINT notifications_notification_object_id_check CHECK ((object_id >= 0))
+);
+
+
+ALTER TABLE public.notifications_notification OWNER TO sergey;
+
+--
+-- Name: notifications_notification_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.notifications_notification_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notifications_notification_id_seq OWNER TO sergey;
+
+--
+-- Name: notifications_notification_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.notifications_notification_id_seq OWNED BY public.notifications_notification.id;
+
+
+--
+-- Name: posts_post; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.posts_post (
+    id bigint NOT NULL,
+    title character varying(200) NOT NULL,
+    slug character varying(50) NOT NULL,
+    text text NOT NULL,
+    brief_text text NOT NULL,
+    image character varying(100),
+    created_at timestamp with time zone NOT NULL,
+    modified_at timestamp with time zone NOT NULL,
+    hub_id bigint,
+    user_id bigint,
+    status character varying(16) NOT NULL
+);
+
+
+ALTER TABLE public.posts_post OWNER TO sergey;
+
+--
+-- Name: posts_post_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.posts_post_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.posts_post_id_seq OWNER TO sergey;
+
+--
+-- Name: posts_post_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.posts_post_id_seq OWNED BY public.posts_post.id;
+
+
+--
+-- Name: users_user; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.users_user (
+    id bigint NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(64) NOT NULL,
+    email character varying(254) NOT NULL,
+    name character varying(128) NOT NULL,
+    birth_year date,
+    bio text NOT NULL,
+    avatar character varying(100) NOT NULL,
+    date_joined timestamp with time zone NOT NULL,
+    is_active boolean NOT NULL,
+    is_staff boolean NOT NULL,
+    rating smallint NOT NULL,
+    CONSTRAINT users_user_rating_check CHECK ((rating >= 0))
+);
+
+
+ALTER TABLE public.users_user OWNER TO sergey;
+
+--
+-- Name: users_user_groups; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.users_user_groups (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users_user_groups OWNER TO sergey;
+
+--
+-- Name: users_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.users_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_groups_id_seq OWNER TO sergey;
+
+--
+-- Name: users_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.users_user_groups_id_seq OWNED BY public.users_user_groups.id;
+
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.users_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_id_seq OWNER TO sergey;
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users_user.id;
+
+
+--
+-- Name: users_user_user_permissions; Type: TABLE; Schema: public; Owner: sergey
+--
+
+CREATE TABLE public.users_user_user_permissions (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users_user_user_permissions OWNER TO sergey;
+
+--
+-- Name: users_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: sergey
+--
+
+CREATE SEQUENCE public.users_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_user_permissions_id_seq OWNER TO sergey;
+
+--
+-- Name: users_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sergey
+--
+
+ALTER SEQUENCE public.users_user_user_permissions_id_seq OWNED BY public.users_user_user_permissions.id;
+
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: comments_comment id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.comments_comment ALTER COLUMN id SET DEFAULT nextval('public.comments_comment_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: hub_hub id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.hub_hub ALTER COLUMN id SET DEFAULT nextval('public.hub_hub_id_seq'::regclass);
+
+
+--
+-- Name: likes_likedislike id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.likes_likedislike ALTER COLUMN id SET DEFAULT nextval('public.likes_likedislike_id_seq'::regclass);
+
+
+--
+-- Name: notifications_notification id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.notifications_notification ALTER COLUMN id SET DEFAULT nextval('public.notifications_notification_id_seq'::regclass);
+
+
+--
+-- Name: posts_post id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.posts_post ALTER COLUMN id SET DEFAULT nextval('public.posts_post_id_seq'::regclass);
+
+
+--
+-- Name: users_user id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user ALTER COLUMN id SET DEFAULT nextval('public.users_user_id_seq'::regclass);
+
+
+--
+-- Name: users_user_groups id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user_groups ALTER COLUMN id SET DEFAULT nextval('public.users_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: users_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.users_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can view log entry	1	view_logentry
+5	Can add permission	2	add_permission
+6	Can change permission	2	change_permission
+7	Can delete permission	2	delete_permission
+8	Can view permission	2	view_permission
+9	Can add group	3	add_group
+10	Can change group	3	change_group
+11	Can delete group	3	delete_group
+12	Can view group	3	view_group
+13	Can add content type	4	add_contenttype
+14	Can change content type	4	change_contenttype
+15	Can delete content type	4	delete_contenttype
+16	Can view content type	4	view_contenttype
+17	Can add session	5	add_session
+18	Can change session	5	change_session
+19	Can delete session	5	delete_session
+20	Can view session	5	view_session
+21	Can add hub	6	add_hub
+22	Can change hub	6	change_hub
+23	Can delete hub	6	delete_hub
+24	Can view hub	6	view_hub
+25	Can add post	7	add_post
+26	Can change post	7	change_post
+27	Can delete post	7	delete_post
+28	Can view post	7	view_post
+29	Can add comment	8	add_comment
+30	Can change comment	8	change_comment
+31	Can delete comment	8	delete_comment
+32	Can view comment	8	view_comment
+33	Can add user	9	add_user
+34	Can change user	9	change_user
+35	Can delete user	9	delete_user
+36	Can view user	9	view_user
+37	Can add like dislike	10	add_likedislike
+38	Can change like dislike	10	change_likedislike
+39	Can delete like dislike	10	delete_likedislike
+40	Can view like dislike	10	view_likedislike
+41	Can add notification	11	add_notification
+42	Can change notification	11	change_notification
+43	Can delete notification	11	delete_notification
+44	Can view notification	11	view_notification
+\.
+
+
+--
+-- Data for Name: comments_comment; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.comments_comment (id, text, active, created_at, modified_at, parent_id, post_id, user_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2022-03-15 23:20:35.431058+03	1	Дизайн	1	[{"added": {}}]	6	1
+2	2022-03-15 23:21:09.189187+03	2	Программирование	1	[{"added": {}}]	6	1
+3	2022-03-15 23:22:15.822828+03	1	Дизайн	2	[{"changed": {"fields": ["Alias"]}}]	6	1
+4	2022-03-15 23:22:27.350446+03	2	Программирование	2	[{"changed": {"fields": ["Alias"]}}]	6	1
+5	2022-03-16 23:48:40.300023+03	3	Администрирование	1	[{"added": {}}]	6	1
+6	2022-03-16 23:49:27.153936+03	4	ОС	1	[{"added": {}}]	6	1
+7	2022-03-16 23:54:08.467232+03	5	ЯП	1	[{"added": {}}]	6	1
+8	2022-03-16 23:55:17.21536+03	5	ЯП	2	[]	6	1
+\.
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	contenttypes	contenttype
+5	sessions	session
+6	hub	hub
+7	posts	post
+8	comments	comment
+9	users	user
+10	likes	likedislike
+11	notifications	notification
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2022-03-15 22:54:35.945432+03
+2	contenttypes	0002_remove_content_type_name	2022-03-15 22:54:35.995388+03
+3	auth	0001_initial	2022-03-15 22:54:36.602814+03
+4	auth	0002_alter_permission_name_max_length	2022-03-15 22:54:36.626551+03
+5	auth	0003_alter_user_email_max_length	2022-03-15 22:54:36.64267+03
+6	auth	0004_alter_user_username_opts	2022-03-15 22:54:36.667107+03
+7	auth	0005_alter_user_last_login_null	2022-03-15 22:54:36.685941+03
+8	auth	0006_require_contenttypes_0002	2022-03-15 22:54:36.701194+03
+9	auth	0007_alter_validators_add_error_messages	2022-03-15 22:54:36.720525+03
+10	auth	0008_alter_user_username_max_length	2022-03-15 22:54:36.751032+03
+11	auth	0009_alter_user_last_name_max_length	2022-03-15 22:54:36.800241+03
+12	auth	0010_alter_group_name_max_length	2022-03-15 22:54:36.849628+03
+13	auth	0011_update_proxy_permissions	2022-03-15 22:54:36.894725+03
+14	auth	0012_alter_user_first_name_max_length	2022-03-15 22:54:36.91419+03
+15	users	0001_initial	2022-03-15 22:54:37.799793+03
+16	admin	0001_initial	2022-03-15 22:54:38.04269+03
+17	admin	0002_logentry_remove_auto_add	2022-03-15 22:54:38.070387+03
+18	admin	0003_logentry_add_action_flag_choices	2022-03-15 22:54:38.086781+03
+19	hub	0001_initial	2022-03-15 22:54:38.151034+03
+20	posts	0001_initial	2022-03-15 22:54:38.486462+03
+21	posts	0002_alter_post_hub_id	2022-03-15 22:54:38.517285+03
+22	posts	0003_alter_post_image	2022-03-15 22:54:38.546359+03
+23	posts	0004_alter_post_image	2022-03-15 22:54:38.566366+03
+24	posts	0005_alter_post_image	2022-03-15 22:54:38.595716+03
+25	posts	0006_rename_hub_id_post_hub_rename_user_id_post_user	2022-03-15 22:54:38.688471+03
+26	comments	0001_initial	2022-03-15 22:54:39.061957+03
+27	comments	0002_alter_comment_parent	2022-03-15 22:54:39.092176+03
+28	likes	0001_initial	2022-03-15 22:54:39.416453+03
+29	likes	0002_delete_article	2022-03-15 22:54:39.432988+03
+30	notifications	0001_initial	2022-03-15 22:54:39.606223+03
+31	notifications	0002_notification_target_user_notification_user	2022-03-15 22:54:39.804987+03
+32	notifications	0003_alter_notification_target_user_and_more	2022-03-15 22:54:39.877982+03
+33	posts	0007_post_status	2022-03-15 22:54:39.917395+03
+34	posts	0008_alter_post_options	2022-03-15 22:54:39.946134+03
+35	posts	0009_alter_post_status	2022-03-15 22:54:39.978047+03
+36	sessions	0001_initial	2022-03-15 22:54:40.270853+03
+37	users	0002_user_rating	2022-03-15 22:54:40.305377+03
+38	users	0003_alter_user_rating	2022-03-15 22:54:40.34233+03
+\.
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+vkomy86lqmnkqv5h3dl07t1uq8cvdb69	.eJxVjEsOAiEQBe_C2hBokI9L93MGQtONM2ogmc_KeHedZBa6fVX1XiLlbR3TtvCcJhIXYcXpd8NcHtx2QPfcbl2W3tZ5Qrkr8qCLHDrx83q4fwdjXsZvDZEMs9KKCUPlgM4XFc41VgDnfTTK6GIBHTltqKAyANFkhREqFevE-wPi1Tef:1nUEub:5fnbrz_Gywhu03cFa9u6uHIxln074w4bCSPCw4nGCs4	2022-03-30 00:41:01.38615+03
+rwuujjlidqo59cjd5vgfxittgxte7k2k	.eJxVjMsOwiAQRf-FtSEMEB4u3fsNZJihUjWQlHZl_Hdt0oVu7znnvkTCba1pG2VJM4uzAHH63TLSo7Qd8B3brUvqbV3mLHdFHnTIa-fyvBzu30HFUb914RwnV8Ao5aObiCFa7a2BiMxgQQfLzEajA6LgVPYFNZFWIbgQvBPvD-BgN3c:1nVHQZ:RKDNx3MBx-v0TAIm9uEnpPc2Hi7xhW_yuMC9F1C8tyU	2022-04-01 21:34:19.958201+03
+tn2bh5j4rsme9i8lknxy1fa2h7apdmwj	.eJxVjMEOwiAQRP-FsyFlQeh69O43kIUFqRpISnsy_rtt0oNe5jDvzbyFp3Upfu1p9hOLiwBx-u0CxWeqO-AH1XuTsdVlnoLcFXnQLm-N0-t6uH8HhXrZ1gbOnNBpMIZytASYeVCQlNUKBwZiPWSHMVscA3JWzlgVU9B5SzeC-HwB2TM32g:1nVIHz:EGTZ9EqksY-yIu6Q1BVAO_rxRM_PSw40Vu34YP_hpUI	2022-04-01 22:29:31.755198+03
+\.
+
+
+--
+-- Data for Name: hub_hub; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.hub_hub (id, title, alias, sort_order) FROM stdin;
+1	Дизайн	dizain	1
+2	Программирование	progr	2
+3	Администрирование	adm	3
+4	ОС	OS	4
+5	ЯП	yap	5
+\.
+
+
+--
+-- Data for Name: likes_likedislike; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.likes_likedislike (id, vote, object_id, content_type_id, user_id) FROM stdin;
+24	1	4	7	2
+117	1	7	7	2
+3	-1	1	7	2
+129	1	2	7	2
+4	-1	1	7	3
+5	1	1	7	4
+87	-1	7	7	5
+89	1	7	7	3
+132	1	6	7	1
+133	1	7	7	1
+99	1	5	7	4
+\.
+
+
+--
+-- Data for Name: notifications_notification; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.notifications_notification (id, object_id, status, content_type_id, target_user_id, user_id) FROM stdin;
+1	1	UNREAD	10	1	2
+129	129	READ	10	1	2
+132	132	UNREAD	10	4	1
+133	133	UNREAD	10	4	1
+3	3	READ	10	1	2
+4	4	READ	10	1	3
+5	5	READ	10	1	4
+24	24	READ	10	1	2
+87	87	UNREAD	10	4	5
+89	89	UNREAD	10	4	3
+95	95	UNREAD	10	4	1
+99	99	UNREAD	10	2	4
+117	117	UNREAD	10	4	2
+\.
+
+
+--
+-- Data for Name: posts_post; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.posts_post (id, title, slug, text, brief_text, image, created_at, modified_at, hub_id, user_id, status) FROM stdin;
+1	Новости	novosti1	<p>Тест Test</p>	<p>Тест</p>		2022-03-15 23:05:57.415132+03	2022-03-15 23:23:58.73335+03	2	1	ACTIVE
+2	123	1232	<p>1,2,3,4.&nbsp; &nbsp; Hello 1 1</p>	<p>123</p>		2022-03-15 23:19:10.895101+03	2022-03-15 23:25:11.109684+03	1	1	ACTIVE
+3	Привет	privet3	<p>Привет!</p>	<p>Привет! Привет!</p>		2022-03-16 21:38:06.029713+03	2022-03-16 21:38:06.059162+03	1	4	ON MODERATION
+6	Пульт управления виртуальной камерой	pult-upravleniya-virtualnoj-kameroj6	<p>Практика формирования видеоряда напрямую из 3D программ, созданных на Unity/Unreal/OpenSceneGraph для создания 3D-обучающих видеофильмов показала высокую эффективность такого подхода. Качество синтезируемой модели часто практически не уступает по фотореалистичности видео, созданному &ldquo;классически&rdquo;, т.е. традиционным рендерингом из программ 3dMax/Maya/Cinema и т.д.</p>\r\n<figure class="full-width "><img title="Пример видеоряда из Unity 3D / Трубопроводный транспорт. КПП СОД." src="https://habrastorage.org/getpro/habr/upload_files/c78/61a/b81/c7861ab819bff53868ef4137720db853.webp" alt="Пример видеоряда из Unity 3D / Трубопроводный транспорт. КПП СОД." width="771" height="434" />\r\n<figcaption>Пример видеоряда из Unity 3D / Трубопроводный транспорт. КПП СОД.</figcaption>\r\n</figure>\r\n<figure class="full-width "><img title="Пример видеоряда из Unity" src="https://habrastorage.org/getpro/habr/upload_files/1c5/994/c3c/1c5994c3c4cf2804b89bbe2995b324b7.webp" alt="Пример видеоряда из Unity" width="774" height="435" />\r\n<figcaption>Пример видеоряда из Unity</figcaption>\r\n</figure>\r\n<figure class="full-width "><img title="Еще пример" src="https://habrastorage.org/getpro/habr/upload_files/a64/562/73e/a6456273ed0735f1e2ea37476ef4e447.webp" alt="Еще пример" width="777" height="437" />\r\n<figcaption>Еще пример</figcaption>\r\n</figure>\r\n<figure class="full-width "><img title="Еще пример" src="https://habrastorage.org/getpro/habr/upload_files/e3a/2c0/aa1/e3a2c0aa14b68c189f132c16e42793fb.webp" alt="Еще пример" width="774" height="435" />\r\n<figcaption>Еще пример</figcaption>\r\n</figure>\r\n<p>При этом имеется возможность управления камерой в режиме реального времени, используя стандартные средства ввода-вывода / клавиатура-мышь. Для выполнения простых пролетов камеры, например по орбите с равномерным приближением или отдалением такой подход является достаточным и не требует каких либо дополнительных устройств управления. Однако при сложных движениях камеры требуется контролировать большее количество параметров движения и как следствие использование стандартных средств ввода-вывода становится или неудобным или недостаточным. VR также не всегда применим, особенно при больших размерах объекта и/или при быстрых перемещениях камеры.</p>\r\n<p>На основе нашего опыта создания видеоряда из 3D программ было принято решение создать пульт управления виртуальной камерой, для эффективного управления движениями камеры, управлением масштабов времени и реализацией управления сценарием происходящего в 3D.</p>\r\n<p>В качестве базы было выбрано оборудование, имеющееся &ldquo;в запасе&rdquo;, а именно:</p>\r\n<figure class="full-width "><img src="https://habrastorage.org/getpro/habr/upload_files/822/d42/953/822d42953885d3d8950fcbe0f4f81258.webp" width="766" height="415" />\r\n<figcaption></figcaption>\r\n</figure>\r\n<p><strong><em>Arduino Due&nbsp;</em></strong><em>&mdash;&nbsp;плата микроконтроллера на базе процессора&nbsp;</em><strong><em>Atmel SAM3X8E&nbsp;ARM Cortex-M3</em></strong><em>&nbsp;(</em><a href="http://out.arduino.ru/?redirect=http%3A%2F%2Fwww.atmel.com%2FImages%2Fdoc11057.pdf&amp;baseU=http%3A%2F%2Farduino.ru%2FHardware%2FArduinoDue" rel="noopener noreferrer nofollow"><em>описание</em></a><em>). Это первая плата Arduino на основе 32-битного микроконтроллера с ARM ядром. На ней имеется 54 цифровых вход/выхода (из них 12 можно задействовать под выходы ШИМ), 12 аналоговых входов, 4 UARTа (аппаратных последовательных порта), a генератор тактовой частоты 84 МГц, связь по USB с поддержкой OTG, 2 ЦАП (цифро-аналоговых преобразователя), 2 TWI, разъем питания, &nbsp;разъем SPI, разъем JTAG.</em>&nbsp;Частота процессора (CPU) 84 МГц. 96 КБ ОЗУ. 512 КБ флеш-памяти для хранения программ. контроллер DMA, который разгружает центральный процессор от выполнения интенсивных операций с памятью.</p>	<p>Практика формирования видеоряда напрямую из 3D программ, созданных на Unity/Unreal/OpenSceneGraph для создания 3D-обучающих видеофильмов показала высокую эффективность такого подхода.</p>		2022-03-17 00:16:23.933403+03	2022-03-17 00:18:16.394239+03	2	4	ACTIVE
+4	Ubuntu 20.10	ubuntu-20104	<h1>Примечания к выпуску Groovy Gorilla</h1>\r\n<h1>Введение</h1>\r\n<p>Эти примечания к выпуску&nbsp;<strong>Ubuntu 20.10</strong>&nbsp;(Groovy Gorilla) содержат обзор выпуска и документируют известные проблемы с Ubuntu и его разновидностями.</p>\r\n<h2>Срок службы поддержки</h2>\r\n<p>Ubuntu 20.10 будет поддерживаться в течение 9 месяцев до июля 2021 года. Если вам нужна долгосрочная поддержка, рекомендуется использовать&nbsp;<a href="https://wiki.ubuntu.com/FocalFossa/ReleaseNotes/">Ubuntu 20.04 LTS.&nbsp;<span class="badge badge-notification clicks" title="4581 клик">4,6к</span></a>вместо.</p>\r\n<h1>Новые функции в версии 20.10</h1>\r\n<h2>Обновленные пакеты</h2>\r\n<h2>ядро Linux<img class="emoji" title=":пингвин:" src="https://discourse.ubuntu.com/images/emoji/emoji_one/penguin.png?v=9" alt=":пингвин:" /></h2>\r\n<p>Ubuntu 20.10 включает&nbsp;ядро ​​Linux&nbsp;<strong>5.8 .&nbsp;</strong>Это включает в себя многочисленные обновления и дополнительную поддержку, начиная с ядра Linux 5.4, выпущенного в Ubuntu 20.04 LTS.&nbsp;Некоторые известные примеры включают:</p>\r\n<ul>\r\n<li>Ограничения очереди эфирного времени для лучшего качества соединения WiFi</li>\r\n<li>Btrfs RAID1 с 3 и 4 копиями и другими вариантами контрольной суммы</li>\r\n<li>Добавлена ​​поддержка USB 4 (протокол Thunderbolt 3).</li>\r\n<li>X86 Включить поддержку 5-уровневого пейджинга по умолчанию</li>\r\n<li>Поддержка графики Intel Gen11 (Ice Lake) и Gen12 (Tiger Lake)</li>\r\n<li>Начальная поддержка AMD Family 19h (Zen 3)</li>\r\n<li>Отслеживание теплового давления для систем для лучшего размещения задач относительно ядра ЦП</li>\r\n<li>Онлайн ремонт XFS</li>\r\n<li>Сопряжение OverlayFS с VirtIO-FS</li>\r\n<li>Общая очередь уведомлений для уведомлений о ключе/связке ключей, изменениях монтирования и т.&nbsp;д.</li>\r\n<li>Active State Power Management (ASPM) для улучшения энергосбережения устройств PCIe-to-PCI</li>\r\n<li>Начальная поддержка POWER10</li>\r\n</ul>\r\n<h2>Обновления цепочки инструментов<img class="emoji" title=":hammer_and_wrench:" src="https://discourse.ubuntu.com/images/emoji/emoji_one/hammer_and_wrench.png?v=9" alt=":hammer_and_wrench:" /></h2>\r\n<p>Ubuntu 20.10 поставляется с обновленным современным набором инструментов, включая новые исходные версии glibc 2.32,&nbsp;<img class="emoji" title=":кофе:" src="https://discourse.ubuntu.com/images/emoji/emoji_one/coffee.png?v=9" alt=":кофе:" />OpenJDK 11, rustc 1.41, GCC 10, LLVM 11,&nbsp;<img class="emoji" title="змея:" src="https://discourse.ubuntu.com/images/emoji/emoji_one/snake.png?v=9" alt="змея:" />Python 3.8.6,&nbsp;<img class="emoji" title="драгоценный камень:" src="https://discourse.ubuntu.com/images/emoji/emoji_one/gem.png?v=9" alt="драгоценный камень:" />ruby ​​2.7.0, php 7.4.9,&nbsp;<img class="emoji" title=":dromedary_camel:" src="https://discourse.ubuntu.com/images/emoji/emoji_one/dromedary_camel.png?v=9" alt=":dromedary_camel:" />perl 5.30 .&nbsp;, голанг 1.13.</p>\r\n<h2>Улучшения безопасности<img class="emoji" title=":замок:" src="https://discourse.ubuntu.com/images/emoji/emoji_one/lock.png?v=9" alt=":замок:" /></h2>\r\n<p>nftables теперь является серверной частью по умолчанию для брандмауэра.</p>\r\n<h2>Рабочий стол Ubuntu</h2>\r\n<p>Ubuntu 20.10 &mdash; первая версия Ubuntu, в которой представлены&nbsp;<a href="https://ubuntu.com/raspberry-pi/desktop">изображения рабочего стола для Raspberry Pi 4.&nbsp;<span class="badge badge-notification clicks" title="2694 клика">2,7к</span></a>.</p>\r\n<h3>ГНОМ<img class="emoji" title=":следы:" src="https://discourse.ubuntu.com/images/emoji/emoji_one/footprints.png?v=9" alt=":следы:" /></h3>\r\n<p>Ubuntu 20.10 включает в себя последнюю версию GNOME версии 3.38 с расширенным обзором действий, улучшениями взаимодействия с пользователем, повышенной производительностью и многим другим.</p>\r\n<h3>Обновленные приложения</h3>\r\n<ul>\r\n<li>Файрфокс&nbsp;<img class="emoji" title=":Пожар:" src="https://discourse.ubuntu.com/images/emoji/emoji_one/fire.png?v=9" alt=":Пожар:" /><img class="emoji" title=":fox_face:" src="https://discourse.ubuntu.com/images/emoji/emoji_one/fox_face.png?v=9" alt=":fox_face:" />версии 81</li>\r\n<li>ЛибреОфис&nbsp;<img class="emoji" title=":книги:" src="https://discourse.ubuntu.com/images/emoji/emoji_one/books.png?v=9" alt=":книги:" />версии 7.0.2</li>\r\n<li>Тандерберд&nbsp;<img class="emoji" title=":cloud_with_lightning:" src="https://discourse.ubuntu.com/images/emoji/emoji_one/cloud_with_lightning.png?v=9" alt=":cloud_with_lightning:" /><img class="emoji" title=":птица:" src="https://discourse.ubuntu.com/images/emoji/emoji_one/bird.png?v=9" alt=":птица:" />версии 78.3.2</li>\r\n</ul>\r\n<h3>Обновленные подсистемы</h3>\r\n<ul>\r\n<li>БлюЗ 5.55</li>\r\n<li>Сетевой менеджер 1.26.2</li>\r\n</ul>\r\n<h2>Сервер Ubuntu</h2>\r\n<h3>Примечательные изменения</h3>\r\n<ul>\r\n<li>squid: помощник базовой аутентификации NIS был удален (&nbsp;<a href="https://bugs.launchpad.net/ubuntu/+source/squid/+bug/1895694">LP: #1895694&nbsp;<span class="badge badge-notification clicks" title="58 кликов">58</span></a>)</li>\r\n<li>adcli и realmd: к этим пакетам было применено множество основных исправлений, улучшающих совместимость с текущими изменениями Active Directory.</li>\r\n<li><a href="https://www.samba.org/samba/history/samba-4.12.0.html">самба 4.12&nbsp;<span class="badge badge-notification clicks" title="74 клика">74</span></a>перешел на GnuTLS для большинства своих криптографических операций, что значительно улучшило производительность шифрования SMB3.</li>\r\n<li>QEMU обновлен до версии 5.0.&nbsp;См. исходные&nbsp;<a href="https://wiki.qemu.org/ChangeLog/5.0">изменения&nbsp;<span class="badge badge-notification clicks" title="60 кликов">60</span></a>для обзора многих улучшений.\r\n<ul>\r\n<li>Одной из примечательных новых функций является&nbsp;<a href="https://www.qemu.org/docs/master/interop/virtiofsd.html">virtiofs.&nbsp;<span class="badge badge-notification clicks" title="60 кликов">60</span></a>что позволяет лучше обмениваться файловыми системами хоста с гостем по сравнению со старым&nbsp;<a href="https://www.kernel.org/doc/Documentation/filesystems/9p.txt">9p fs&nbsp;<span class="badge badge-notification clicks" title="9 кликов">9</span></a>основанный подход.</li>\r\n</ul>\r\n</li>\r\n<li>Libvirt обновлен до версии 6.6.&nbsp;См.&nbsp;<a href="https://libvirt.org/news.html">исходные журналы изменений&nbsp;<span class="badge badge-notification clicks" title="50 кликов">50</span></a>за множество улучшений и исправлений, начиная с версии 6.0, которая была в&nbsp;<a href="https://wiki.ubuntu.com/FocalFossa/ReleaseNotes#Ubuntu_Server">Focal&nbsp;<span class="badge badge-notification clicks" title="5 кликов">5</span></a>.\r\n<ul>\r\n<li>Libvirt 6.6 также поддерживает новые&nbsp;<a href="https://libvirt.org/kbase/virtiofs.html">virtiofs.&nbsp;<span class="badge badge-notification clicks" title="23 клика">23</span></a>это было упомянуто в разделе QEMU выше.</li>\r\n</ul>\r\n</li>\r\n<li>Переходный пакет доставки почтового стека Dovecot устарел в focus и полностью удален в groovy.&nbsp;(LP:&nbsp;<span class="hashtag">#1771524</span>&nbsp;,&nbsp;<span class="hashtag">#1876564</span>&nbsp;)\r\n<ul>\r\n<li>Сам Dovecot обновлен с фокальной 2.3.7 до 2.3.11.&nbsp;Это добавляет поддержку SSL/STARTTLS для соединений doveadm через прокси, пакетную обработку транзакций IMAP, расширенные отчеты о событиях и множество других исправлений.&nbsp;Поддержка карты сокетов Postfix прекращена.&nbsp;См.&nbsp;<a href="https://dovecot.org/doc/NEWS">https://dovecot.org/doc/NEWS&nbsp;<span class="badge badge-notification clicks" title="32 клика">32</span></a>для полного списка изменений.</li>\r\n</ul>\r\n</li>\r\n<li><a href="https://github.com/axboe/liburing">освобождение&nbsp;<span class="badge badge-notification clicks" title="53 клика">53</span></a>добавлена ​​поддержка.&nbsp;Это новый механизм асинхронного ввода-вывода в ядре Linux.&nbsp;На данный момент у нас есть qemu и samba, использующие эту поддержку.\r\n<ul>\r\n<li>В Samba добавлена ​​поддержка uring в версии&nbsp;<a href="https://wiki.samba.org/index.php/Samba_4.12_Features_added/changed#.27io_uring.27_vfs_module">4.12.0.&nbsp;<span class="badge badge-notification clicks" title="11 кликов">11</span></a>в виде модуля VFS.&nbsp;Это часть пакета samba-vfs-modules.</li>\r\n<li>Qemu добавил поддержку uring в&nbsp;<a href="https://wiki.qemu.org/ChangeLog/5.0#Block_device_backends_and_tools">выпуске 5.0&nbsp;<span class="badge badge-notification clicks" title="14 кликов">14</span></a>, его можно использовать с драйвером file-posix, например, aio=io_uring.</li>\r\n</ul>\r\n</li>\r\n<li>Groovy представляет&nbsp;<a href="https://www.influxdata.com/time-series-platform/telegraf/">телеграф&nbsp;<span class="badge badge-notification clicks" title="135 кликов">135</span></a>&nbsp;<a href="https://launchpad.net/ubuntu/groovy/+source/telegraf">упаковка&nbsp;<span class="badge badge-notification clicks" title="16 кликов">16</span></a>, часть известного стека ведения журналов, мониторинга и предупреждений (LMA).&nbsp;Вместе с&nbsp;<a href="https://prometheus.io/">Прометеем&nbsp;<span class="badge badge-notification clicks" title="24 клика">24</span></a>,&nbsp;<a href="https://prometheus.io/docs/alerting/latest/alertmanager/">диспетчер оповещений prometheus&nbsp;<span class="badge badge-notification clicks" title="11 кликов">11</span></a>и&nbsp;<a href="https://grafana.com/">графана&nbsp;<span class="badge badge-notification clicks" title="15 кликов">15</span></a>, это трио формирует основу мощного и надежного решения для мониторинга и оповещения, которое можно развернуть в системах Ubuntu.\r\n<ul>\r\n<li>Grafana: функциональная информационная панель с метриками и редактор графиков, доступные по&nbsp;<a href="https://snapcraft.io/grafana">ссылке https://snapcraft.io/grafana .&nbsp;<span class="badge badge-notification clicks" title="75 кликов">75</span></a></li>\r\n<li>Prometheus и диспетчер предупреждений: система мониторинга и база данных временных рядов, доступные в виде оснастки на&nbsp;<a href="https://snapcraft.io/prometheus">https://snapcraft.io/prometheus .&nbsp;<span class="badge badge-notification clicks" title="45 кликов">45</span></a>и как пакет deb в Groovy</li>\r\n<li>Telegraf: агент для сбора и отправки метрик и событий из баз данных, систем и датчиков IoT.&nbsp;Доступен как пакет deb в Groovy.</li>\r\n</ul>\r\n</li>\r\n</ul>	<h1>Примечания к выпуску Groovy Gorilla</h1>\r\n<h1>Введение</h1>\r\n<p>Эти примечания к выпуску&nbsp;<strong>Ubuntu 20.10</strong>&nbsp;(Groovy Gorilla) содержат обзор выпуска и документируют известные проблемы с Ubuntu и его разновидностями.</p>	posts/ubuntu.jpeg	2022-03-17 00:00:32.60712+03	2022-03-17 00:01:51.925253+03	4	1	ACTIVE
+5	Mac OS	mac-os5	<p><strong>macOS</strong>&nbsp;&mdash;&nbsp;<a title="Проприетарное программное обеспечение" href="https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D0%BF%D1%80%D0%B8%D0%B5%D1%82%D0%B0%D1%80%D0%BD%D0%BE%D0%B5_%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BD%D0%BE%D0%B5_%D0%BE%D0%B1%D0%B5%D1%81%D0%BF%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B5">проприетарная</a>&nbsp;<a title="Операционная система" href="https://ru.wikipedia.org/wiki/%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D0%B0%D1%8F_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0">операционная система</a>&nbsp;компании&nbsp;<a title="Apple" href="https://ru.wikipedia.org/wiki/Apple">Apple</a>. Является преемницей&nbsp;<a title="Mac OS 9" href="https://ru.wikipedia.org/wiki/Mac_OS_9">Mac OS 9</a>.</p>\r\n<p>Семейство операционных систем macOS является вторым по распространённости для десктопа (после&nbsp;<a title="Windows" href="https://ru.wikipedia.org/wiki/Windows">Windows</a>). Рыночная доля macOS (учитываются все версии) по состоянию на февраль 2022 года составляет около&nbsp;<span aria-label="Падение">▼</span>15,76&nbsp;% по оценкам StatCounter<sup id="cite_ref-3" class="reference"><a href="https://ru.wikipedia.org/wiki/MacOS#cite_note-3">[3]</a></sup>. Самой популярной версией macOS является&nbsp;<a title="MacOS Catalina" href="https://ru.wikipedia.org/wiki/MacOS_Catalina">Catalina</a>&nbsp;(83,36&nbsp;% среди всех версий macOS), следом идут&nbsp;<a title="MacOS Mojave" href="https://ru.wikipedia.org/wiki/MacOS_Mojave">Mojave</a>&nbsp;(5,64&nbsp;%),&nbsp;<a title="MacOS High Sierra" href="https://ru.wikipedia.org/wiki/MacOS_High_Sierra">High Sierra</a>&nbsp;(5,05&nbsp;%),&nbsp;<a title="MacOS Sierra" href="https://ru.wikipedia.org/wiki/MacOS_Sierra">Sierra</a>&nbsp;(2,1&nbsp;%),&nbsp;<a title="OS X El Capitan" href="https://ru.wikipedia.org/wiki/OS_X_El_Capitan">El Capitan</a>&nbsp;(1,56&nbsp;%),&nbsp;<a title="OS X Yosemite" href="https://ru.wikipedia.org/wiki/OS_X_Yosemite">Yosemite</a>&nbsp;(1,21&nbsp;%)<sup id="cite_ref-4" class="reference"><a href="https://ru.wikipedia.org/wiki/MacOS#cite_note-4">[4]</a></sup>.</p>\r\n<p>В macOS используется&nbsp;<a title="Ядро операционной системы" href="https://ru.wikipedia.org/wiki/%D0%AF%D0%B4%D1%80%D0%BE_%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D0%BE%D0%B9_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B">ядро</a>&nbsp;<a title="XNU" href="https://ru.wikipedia.org/wiki/XNU">XNU</a>, основанное на&nbsp;<a title="Микроядро" href="https://ru.wikipedia.org/wiki/%D0%9C%D0%B8%D0%BA%D1%80%D0%BE%D1%8F%D0%B4%D1%80%D0%BE">микроядре</a>&nbsp;<a title="Mach" href="https://ru.wikipedia.org/wiki/Mach">Mach</a>&nbsp;и содержащее&nbsp;<a class="mw-redirect" title="Программный код" href="https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D0%B4">программный код</a>, разработанный компанией Apple, а также код из&nbsp;<a title="Операционная система" href="https://ru.wikipedia.org/wiki/%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D0%B0%D1%8F_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0">ОС</a>&nbsp;<a title="NeXTSTEP" href="https://ru.wikipedia.org/wiki/NeXTSTEP">NeXTSTEP</a>&nbsp;и&nbsp;<a title="FreeBSD" href="https://ru.wikipedia.org/wiki/FreeBSD">FreeBSD</a>. До версии 10.3 ОС работала только на компьютерах с процессорами&nbsp;<a title="PowerPC" href="https://ru.wikipedia.org/wiki/PowerPC">PowerPC</a>. Выпуски 10.4 и 10.5 поддерживали как PowerPC-, так и&nbsp;<a title="Intel" href="https://ru.wikipedia.org/wiki/Intel">Intel</a>-процессоры. Начиная с 10.6, macOS работает только с процессорами Intel<sup id="cite_ref-5" class="reference"><a href="https://ru.wikipedia.org/wiki/MacOS#cite_note-5">[5]</a></sup>&nbsp;и&nbsp;<a class="mw-redirect" title="Apple Silicon" href="https://ru.wikipedia.org/wiki/Apple_Silicon">Apple Silicon</a>.</p>\r\n<p>В последние годы отмечается взаимная интеграция macOS и&nbsp;<a title="IOS" href="https://ru.wikipedia.org/wiki/IOS">iOS</a>&nbsp;&mdash; операционной системы для мобильных устройств Apple (<a title="IPhone" href="https://ru.wikipedia.org/wiki/IPhone">iPhone</a>,&nbsp;<a title="IPad" href="https://ru.wikipedia.org/wiki/IPad">iPad</a>&nbsp;и&nbsp;<a title="IPod touch" href="https://ru.wikipedia.org/wiki/IPod_touch">iPod touch</a>). Сама компания рассматривает две ОС как единую платформу<sup id="cite_ref-6" class="reference"><a href="https://ru.wikipedia.org/wiki/MacOS#cite_note-6">[6]</a></sup>. На презентации&nbsp;<em>Back to the Mac</em>&nbsp;в 2010 году&nbsp;<a class="mw-redirect" title="Стив Джобс" href="https://ru.wikipedia.org/wiki/%D0%A1%D1%82%D0%B8%D0%B2_%D0%94%D0%B6%D0%BE%D0%B1%D1%81">Стив Джобс</a>, анонсируя&nbsp;<a title="OS X Lion" href="https://ru.wikipedia.org/wiki/OS_X_Lion">OS X Lion</a>, упомянул о важности обмена наработками между Mac OS X и iOS: так, в Lion появилась поддержка&nbsp;<em><a title="Мультитач" href="https://ru.wikipedia.org/wiki/%D0%9C%D1%83%D0%BB%D1%8C%D1%82%D0%B8%D1%82%D0%B0%D1%87">мультитач</a>-жестов</em>&nbsp;на&nbsp;<a class="mw-redirect" title="Трекпад" href="https://ru.wikipedia.org/wiki/%D0%A2%D1%80%D0%B5%D0%BA%D0%BF%D0%B0%D0%B4">трекпаде</a>&nbsp;(аналогичных жестам на iPad)<sup id="cite_ref-7" class="reference"><a href="https://ru.wikipedia.org/wiki/MacOS#cite_note-7">[7]</a></sup>. В последующих выпусках macOS также наблюдалась тенденция к заимствованию функций из iOS (и наоборот). Например, в OS X Yosemite и iOS 8 была добавлена технология Handoff, позволяющая &laquo;перехватывать&raquo; с одного устройства приложения, запущенные на другом: начать набирать письмо на Mac, а закончить на iPad; открыть веб-страницу на iPhone и продолжить чтение на Mac и&nbsp;т.&nbsp;д.<sup id="cite_ref-8" class="reference"><a href="https://ru.wikipedia.org/wiki/MacOS#cite_note-8">[8]</a></sup></p>\r\n<p>На&nbsp;<a title="Worldwide Developers Conference" href="https://ru.wikipedia.org/wiki/Worldwide_Developers_Conference">WWDC</a>&nbsp;2016 было объявлено, что OS X будет переименована в macOS, чтобы соответствовать общей стилистике именования других платформ Apple:&nbsp;<a title="TvOS" href="https://ru.wikipedia.org/wiki/TvOS">tvOS</a>,&nbsp;<a title="WatchOS" href="https://ru.wikipedia.org/wiki/WatchOS">watchOS</a>&nbsp;и&nbsp;<a title="IOS" href="https://ru.wikipedia.org/wiki/IOS">iOS</a>;&nbsp;<a title="MacOS Sierra" href="https://ru.wikipedia.org/wiki/MacOS_Sierra">macOS Sierra</a>&nbsp;стала первой версией, использующей новое название<sup id="cite_ref-9" class="reference"><a href="https://ru.wikipedia.org/wiki/MacOS#cite_note-9">[9]</a></sup>.</p>	<p>Семейство операционных систем macOS является вторым по распространённости для десктопа (после&nbsp;<a title="Windows" href="https://ru.wikipedia.org/wiki/Windows">Windows</a>).&nbsp;</p>	posts/macOS.jpeg	2022-03-17 00:09:05.882481+03	2022-03-17 00:13:34.520825+03	4	2	ACTIVE
+7	6 наблюдений о хорошем сюжете для видеоигр	6-nablyudenij-o-horoshem-syuzhete-dlya-videoigr7	<p>Даже с малым бюджетом инди-проекты регулярно попадают в топы и собирают восторженные отзывы игроков. Не только благодаря геймплею, но очень часто нарративной части, в которой разработчики могут себе позволить выйти далеко за рамки привычных AAA-историй.</p>\r\n<p>Своими наблюдениями об игровых сюжетах поделился сценарист инди-игр, а мы перевели.</p>\r\n<p><em>Дисклеймер: далее идет мнение автора оригинальной статьи. Местами очень спорное, местами любопытное.&nbsp;Делитесь своим в комментариях.</em></p>\r\n<p>Наша маленькая компания уже 27 лет зарабатывает (ну, &laquo;зарабатывает&raquo;) на жизнь разработкой&nbsp;<a href="https://store.steampowered.com/search/?developer=Spiderweb%20Software"><u>инди</u></a>. Это чрезвычайно жесткий и конкурентный бизнес, а мы работаем в нем гораздо дольше многих.&nbsp;</p>\r\n<p>Мы создаем супер-ретро-низкобюджетные игры, которые не выглядят потрясающе. Никогда не выглядели. И никогда не будут. Так как же нам добиться успеха?</p>\r\n<p>Ответ: сценарий. Наш геймдизайн хорош, но истории, которые мы рассказываем, &mdash; то, что удерживает нас в индустрии. Наши игры &mdash; это интерактивные романы с персонажами и историями, которые заставляют людей платить нам реальные деньги.</p>\r\n<figure class="full-width "><img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/b2d/740/00e/b2d74000effea4ff66d4d026e2a3b08a.png" width="762" height="429" data-src="https://habrastorage.org/getpro/habr/upload_files/b2d/740/00e/b2d74000effea4ff66d4d026e2a3b08a.png" />\r\n<figcaption></figcaption>\r\n</figure>\r\n<p>Давайте начистоту &mdash; я не великий писатель-фантаст. Если бы я им был, то писал бы книги, которые никто не покупает (потому что теперь никто не покупает книги). Я просто компетентный сценарист, что по стандартам видеоигр делает меня крутым. И этого достаточно, чтобы проекты стали успешными.</p>\r\n<p>Меня очень волнует сюжет в играх, просто потому что обычно он довольно посредственный. Я ценю проекты, которые хорошо рассказывают истории, вздыхаю над теми, которые этого не делают, и вырываю волосы, когда тайтл с сомнительным сюжетом называют высоким искусством.</p>\r\n<p>Никто не просил, но я собрал шесть своих наблюдений о хорошем сюжете в видеоиграх.</p>\r\n<figure class="full-width "><img title="Subnautica &mdash; пример по-настоящему крепкого сюжета в инди-игре. Секрет: они сохранили простоту." src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/9e4/a3c/e20/9e4a3ce20faf7abf00937e8a3b466829.png" alt="Subnautica &mdash; пример по-настоящему крепкого сюжета в инди-игре. Секрет: они сохранили простоту." width="763" height="434" data-src="https://habrastorage.org/getpro/habr/upload_files/9e4/a3c/e20/9e4a3ce20faf7abf00937e8a3b466829.png" />\r\n<figcaption>Subnautica &mdash; пример по-настоящему крепкого сюжета в инди-игре. Секрет: они сохранили простоту.</figcaption>\r\n</figure>\r\n<p><strong>Наблюдение 1: Когда люди говорят, что у игры хороший сюжет, они имеют в виду, что он есть.</strong></p>\r\n<p>У игроков репутация нетерпимых, вечно сердитых жалобщиков. Это не так. Геймеры &mdash; самая снисходительная и терпимая аудитория среди всех медиа.</p>\r\n<p>Если ваша игра еле работает, но дает скоротать время, то пользователи дадут вам миллиард долларов. Игры в сломанном и недоделанном состоянии постоянно взлетают на вершины топов &mdash; вот насколько терпимы геймеры. Часто они даже не требуют, чтобы ваш продукт просто стабильно работал.</p>\r\n<p>Самая снисходительная аудитория в мире оценит ваш проект на отлично, если он не тратит ваше время впустую, в нем есть сюжет, который связно и последовательно развивается от начала до конца, пара запоминающихся персонажей и диалогов.</p>\r\n<p>Но это не имеет значения, потому что&hellip;</p>\r\n<p><strong>Наблюдение 2: Игроки простят вам хороший сюжет, если позволить им его игнорировать.</strong></p>\r\n<p>Геймеров, как правило, не волнует сюжет вашей игры. Им нужен адреналин от стрельбы или сладкие приливы дофамина от заполнения статус-баров.</p>\r\n<p>Если вам хочется хорошего сюжета, вы можете посмотреть фильм, телешоу или прочитать книгу &mdash; каждый из этих вариантов в разы превосходит лучшую видеоигру в плане сюжета. Независимо от того, что вам по вкусу: &laquo;Индиана Джонс: В поисках утраченного ковчега&raquo;, &laquo;Гамлет&raquo;, &laquo;Стражи Галактики&raquo; или &laquo;Во все тяжкие&raquo;, &mdash; в видеоиграх есть истории и похуже. Извините.</p>\r\n<p>Это неважно, потому что большинство игроков просто не обращают внимания на сюжет. Пока вы позволяете им его пропустить, то все в порядке. Есть много людей, которые провели сотни часов в World of Warcraft (в том числе и я) &mdash; если среди всех провести тест на знание истории игры, то 99% гарантированно получит двойку.</p>\r\n<p>Хорошая история &mdash; не то, что нужно геймерам. И это хорошо, потому что они ее не получат.</p>\r\n<figure class="float full-width "><img title="Куб-компаньон &mdash; одно из самых умных изобретений за историю написания видеоигр. Просто. Ясно. Мрачно. Смешно. Одна маленькая идея может сделать так много." src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/e20/05b/d2b/e2005bd2b4154cc9745487858175ccc0.png" alt="Куб-компаньон &mdash; одно из самых умных изобретений за историю написания видеоигр. Просто. Ясно. Мрачно. Смешно. Одна маленькая идея может сделать так много." width="740" height="717" data-src="https://habrastorage.org/getpro/habr/upload_files/e20/05b/d2b/e2005bd2b4154cc9745487858175ccc0.png" />\r\n<figcaption>Куб-компаньон &mdash; одно из самых умных изобретений за историю написания видеоигр. Просто. Ясно. Мрачно. Смешно. Одна маленькая идея может сделать так много.</figcaption>\r\n</figure>\r\n<p><strong>Наблюдение 3: Сюжет видеоигр по умолчанию звучит так: &laquo;Видите вон того парня? Этот парень плохой. Прикончите его&raquo;. Если ваш сюжет чем-то отличается от этого, то вы на 99% способны придумать лучшую историю.</strong></p>\r\n<p>Одной из самых влиятельных РПГ за все время была Ultima IV 1985 года. Почему? Потому что это была первая большая ролевая игра с другим сюжетом.</p>\r\n<p>А сейчас? Psychonauts и Psychonauts 2 называют двумя самыми хорошо написанными играми в истории, и обе они имеют такой сюжет. В них есть несколько хороших диалогов, забавных и интересных развилок, но история все равно проста: &laquo;Давайте идти по линейной последовательности сюжетных точек, пока наконец не ударим большого парня по лицу&raquo;. Persona 5 &mdash; классная игра с кучей увлекательных отдельных глав, и мне она очень понравилась, но в финале мы просто несколько раз бьем большую светящуюся штуку.</p>\r\n<p>Конечно, есть способы придать игре остроты. Можно дать главному антагонисту грустную предысторию. Или добавить еще двух плохишей, чтобы устранять по одному. Можно прикончить злодея, у которого потом откроется грудь, и оттуда вылетит бог, а бог &mdash; это новый злодей, которого нужно победить. Вариант известный как JRPG.</p>\r\n<p>Все то же самое. И все уловки, которые вы можете использовать, чтобы замаскировать это, становятся немного приевшимися&hellip;</p>\r\n<figure class="full-width "><img title="Все, что нужно, чтобы история вызвала огромный резонанс, &mdash; приложить усилия. Сюжет не обязательно должен иметь смысл, а персонажи не должны действовать правдоподобно и последовательно. Так произошло с Firewatch." src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/6f1/2ff/647/6f12ff64781e94802bded0b405f5dce5.png" alt="Все, что нужно, чтобы история вызвала огромный резонанс, &mdash; приложить усилия. Сюжет не обязательно должен иметь смысл, а персонажи не должны действовать правдоподобно и последовательно. Так произошло с Firewatch." width="764" height="430" data-src="https://habrastorage.org/getpro/habr/upload_files/6f1/2ff/647/6f12ff64781e94802bded0b405f5dce5.png" />\r\n<figcaption>Все, что нужно, чтобы история вызвала огромный резонанс, &mdash; приложить усилия. Сюжет не обязательно должен иметь смысл, а персонажи не должны действовать правдоподобно и последовательно. Так произошло с Firewatch.</figcaption>\r\n</figure>\r\n<p><strong>Наблюдение 4: Три чумы сторителлинга &mdash; странные концовки, самодовольные ироничные диалоги и мемы.</strong></p>\r\n<p>Одна из самых больших проблем игровой индустрии заключается в том, что работать в ней невыносимо, поэтому почти каждый специалист увольняется примерно через 10 лет. Увы, чтобы стать хорошим сценаристом, требуется больше. Поэтому приходится прибегать к дешевым уловкам.</p>\r\n<p>Каждый сценарист увидел &laquo;Шестое чувство&raquo; и подумал: &laquo;Ух ты! Я хочу сделать свою собственную сумасшедшую концовку!&raquo; К сожалению, это почти всегда приводит к чему-то менее увлекательному, чем прямое и честное изложение истории. Не жульничайте.</p>\r\n<p>Джосс Уидон овладел искусством смешивать серьезные события с дурацкими диалогами. В XX веке это было свежо, теперь это повсюду (Borderlands особенно злоупотребляет этим). Превращение всего в дурацкое и смешное значит лишь то, что игре становится сложнее быть серьезной, эмоциональной и искренней. Но это тот режим, в котором иногда нужно находиться, чтобы создавать хорошие тексты. Если все шутка, то какая разница?</p>\r\n<p>Мемы в свою очередь мгновенно устаревают. У Portal и Portal 2 крайне забавный сторителлинг, потому что они придумали нечто новое. Каждая игра, которая списывалась с них, устарела и несет на себе вечный отпечаток неубедительности. Серьезно, придумывайте собственные шутки! Так будет веселее.</p>\r\n<figure class="full-width "><img title="Spec Ops: The Line &mdash; совершенно стандартный шутерный геймплей, но взрывающая мозг концовка. Из-за ее умных писательских приемов об игре все еще говорят." src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/aaa/4f7/2e8/aaa4f72e8e9e78540a372ed372de4e73.png" alt="Spec Ops: The Line &mdash; совершенно стандартный шутерный геймплей, но взрывающая мозг концовка. Из-за ее умных писательских приемов об игре все еще говорят." width="766" height="431" data-src="https://habrastorage.org/getpro/habr/upload_files/aaa/4f7/2e8/aaa4f72e8e9e78540a372ed372de4e73.png" />\r\n<figcaption>Spec Ops: The Line &mdash; совершенно стандартный шутерный геймплей, но взрывающая мозг концовка. Из-за ее умных писательских приемов об игре все еще говорят.</figcaption>\r\n</figure>\r\n<p><strong>Наблюдение 5: Создание хорошей истории стоит столько же, сколько и плохой, а хорошая история может помочь вашей игре продаваться. Так почему бы не сделать ее?</strong></p>\r\n<p>Portal и Portal 2 были отличными головоломками, которые превратились в классику благодаря хорошему сценарию. У The Last of Us достойный геймплей, но игра стала феноменом, потому что сюжет не уступает фильму. Почему Borderlands 2 &mdash; самая любимая и продаваемая игра в серии, хотя геймплей такой же, как и у других? Сценарий.</p>\r\n<p><strong>Наблюдение 6: Хороший сценарий исходит из индивидуального авторского видения. Поэтому он чаще встречается в инди.</strong></p>\r\n<p>Когда вы работаете над AAA с бюджетом в $300 млн, то все управленческие решения будут направлены на достижение одной цели: отшлифовать любые странные грани и причудливые детали. Чтобы игра AAA обладала уникальным авторским голосом, над ней должен работать кто-то очень известный или влиятельный. Что случается нечасто.</p>\r\n<p>Но я? Я просто большой чудак, сидящий один в комнате. Я могу делать все, что, черт возьми, захочу.</p>\r\n<p>Величие инди-разработчиков в том, что мы можем заполнить все пробелы на рынке, которые недоступны крупным компаниям. Независимо от того, насколько мал бюджет &mdash; всегда можно создать хорошую историю.</p>\r\n<figure class="full-width "><img title="Красавчик Джек &mdash; 10 лет спустя серия Borderlands все еще питается его репутацией." src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/f05/d7f/dd5/f05d7fdd51014d1d6533e476eb9050e5.png" alt="Красавчик Джек &mdash; 10 лет спустя серия Borderlands все еще питается его репутацией." width="767" height="331" data-src="https://habrastorage.org/getpro/habr/upload_files/f05/d7f/dd5/f05d7fdd51014d1d6533e476eb9050e5.png" />\r\n<figcaption>Красавчик Джек &mdash; 10 лет спустя серия Borderlands все еще питается его репутацией.</figcaption>\r\n</figure>\r\n<p><strong>&laquo;О, так ты теперь всех судишь? Что делает тебя таким великим?&raquo;</strong></p>\r\n<p>Создавать видеоигры сложно и дорого. Графика, звук, программирование, тестирование &mdash; это огромные усилия. По сравнению с этим сам процесс нанесения слов на бумагу ничтожен.</p>\r\n<p>Так что делайте это правильно. Ведь чтобы превратить среднюю игру во что-то отличное, требуется не так много: умная сцена, классный персонаж, действительно свежая или забавная идея. В этом контексте &laquo;отлично&raquo; означает &laquo;много бесплатного пиара и продаж&raquo;.</p>\r\n<p>Или не делайте. Если мне придется конкурировать с талантливыми сценаристами, я уйду из индустрии очень быстро.</p>	<p>Даже с малым бюджетом инди-проекты регулярно попадают в топы и собирают восторженные отзывы игроков. Не только благодаря геймплею, но очень часто нарративной части, в которой разработчики могут себе позволить выйти далеко за рамки привычных AAA-историй.</p>	posts/31e3c7895092c4257d760ab859754105.png	2022-03-17 00:22:17.027005+03	2022-03-17 00:22:24.356352+03	1	4	ACTIVE
+\.
+
+
+--
+-- Data for Name: users_user; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.users_user (id, password, last_login, is_superuser, username, email, name, birth_year, bio, avatar, date_joined, is_active, is_staff, rating) FROM stdin;
+4	pbkdf2_sha256$320000$BQiy5WZdiWun05On1500LM$aWTBeNUlxzxpGJAEH0kHzNlfb/GZCiyQ/lI0YEPuenA=	2022-03-17 20:58:28.597967+03	f	999	999@mail.ru		\N		avatars/no_avatar.png	2022-03-16 00:40:57.58777+03	t	f	5
+2	pbkdf2_sha256$320000$e6xsgyNzyg1rem5OR1h5mh$JsW1YtNWpw4h4QieeDb+dn5hY931S4/Sn4/RBtRjPQU=	2022-03-18 22:29:31.742448+03	f	111	111@mail.ru		\N		avatars/no_avatar.png	2022-03-15 23:26:14.30845+03	t	f	5
+5	pbkdf2_sha256$320000$ym0TrzWRyn17dkuuGFrHYb$/TqIO6ozxkyfGPFfsPU/O9QBdYIiuQpXNxl+i0T8LaQ=	2022-03-17 20:01:44.694173+03	f	888	88888@mail.ru		\N		avatars/no_avatar.png	2022-03-17 20:01:40.71395+03	t	f	5
+3	pbkdf2_sha256$320000$ydPobvVBexq3wuMBTDxTdK$2tB3svqhCRMFpyg0CGttOHBza/wuKGUErCex7MpcO6M=	2022-03-17 20:47:02.253796+03	f	777	777@mail.ru		\N		avatars/no_avatar.png	2022-03-16 00:30:55.174755+03	t	f	5
+1	pbkdf2_sha256$320000$SD6KeI5eNit4zFYwWPfCiG$miidgsTqnvdH/21tDPISuesUCm7QEk0MV3XBVEoV5ic=	2022-03-18 21:34:19.933045+03	t	orion	orion@mail.ru		\N		avatars/no_avatar.png	2022-03-15 22:58:10.5024+03	t	t	5
+\.
+
+
+--
+-- Data for Name: users_user_groups; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.users_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: sergey
+--
+
+COPY public.users_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 44, true);
+
+
+--
+-- Name: comments_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.comments_comment_id_seq', 1, false);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 8, true);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 11, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 38, true);
+
+
+--
+-- Name: hub_hub_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.hub_hub_id_seq', 5, true);
+
+
+--
+-- Name: likes_likedislike_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.likes_likedislike_id_seq', 133, true);
+
+
+--
+-- Name: notifications_notification_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.notifications_notification_id_seq', 133, true);
+
+
+--
+-- Name: posts_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.posts_post_id_seq', 7, true);
+
+
+--
+-- Name: users_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.users_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.users_user_id_seq', 5, true);
+
+
+--
+-- Name: users_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sergey
+--
+
+SELECT pg_catalog.setval('public.users_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: comments_comment comments_comment_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.comments_comment
+    ADD CONSTRAINT comments_comment_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: hub_hub hub_hub_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.hub_hub
+    ADD CONSTRAINT hub_hub_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: likes_likedislike likes_likedislike_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.likes_likedislike
+    ADD CONSTRAINT likes_likedislike_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notifications_notification notifications_notification_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.notifications_notification
+    ADD CONSTRAINT notifications_notification_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: posts_post posts_post_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.posts_post
+    ADD CONSTRAINT posts_post_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user users_user_email_key; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user
+    ADD CONSTRAINT users_user_email_key UNIQUE (email);
+
+
+--
+-- Name: users_user_groups users_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_groups users_user_groups_user_id_group_id_b88eab82_uniq; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_user_id_group_id_b88eab82_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: users_user users_user_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user
+    ADD CONSTRAINT users_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_user_permissions users_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_user_permissions users_user_user_permissions_user_id_permission_id_43338c45_uniq; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_permissions_user_id_permission_id_43338c45_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: users_user users_user_username_key; Type: CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user
+    ADD CONSTRAINT users_user_username_key UNIQUE (username);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: comments_comment_parent_id_3e0802fb; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX comments_comment_parent_id_3e0802fb ON public.comments_comment USING btree (parent_id);
+
+
+--
+-- Name: comments_comment_post_id_96a9ac05; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX comments_comment_post_id_96a9ac05 ON public.comments_comment USING btree (post_id);
+
+
+--
+-- Name: comments_comment_user_id_a1db4881; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX comments_comment_user_id_a1db4881 ON public.comments_comment USING btree (user_id);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: likes_likedislike_content_type_id_79008b70; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX likes_likedislike_content_type_id_79008b70 ON public.likes_likedislike USING btree (content_type_id);
+
+
+--
+-- Name: likes_likedislike_user_id_504213d3; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX likes_likedislike_user_id_504213d3 ON public.likes_likedislike USING btree (user_id);
+
+
+--
+-- Name: notifications_notification_content_type_id_74ab3a2c; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX notifications_notification_content_type_id_74ab3a2c ON public.notifications_notification USING btree (content_type_id);
+
+
+--
+-- Name: notifications_notification_target_user_id_35babc75; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX notifications_notification_target_user_id_35babc75 ON public.notifications_notification USING btree (target_user_id);
+
+
+--
+-- Name: notifications_notification_user_id_b5e8c0ff; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX notifications_notification_user_id_b5e8c0ff ON public.notifications_notification USING btree (user_id);
+
+
+--
+-- Name: posts_post_hub_id_id_57c906d9; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX posts_post_hub_id_id_57c906d9 ON public.posts_post USING btree (hub_id);
+
+
+--
+-- Name: posts_post_slug_6e9097e5; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX posts_post_slug_6e9097e5 ON public.posts_post USING btree (slug);
+
+
+--
+-- Name: posts_post_slug_6e9097e5_like; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX posts_post_slug_6e9097e5_like ON public.posts_post USING btree (slug varchar_pattern_ops);
+
+
+--
+-- Name: posts_post_user_id_id_8907527a; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX posts_post_user_id_id_8907527a ON public.posts_post USING btree (user_id);
+
+
+--
+-- Name: users_user_email_243f6e77_like; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX users_user_email_243f6e77_like ON public.users_user USING btree (email varchar_pattern_ops);
+
+
+--
+-- Name: users_user_groups_group_id_9afc8d0e; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX users_user_groups_group_id_9afc8d0e ON public.users_user_groups USING btree (group_id);
+
+
+--
+-- Name: users_user_groups_user_id_5f6f5a90; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX users_user_groups_user_id_5f6f5a90 ON public.users_user_groups USING btree (user_id);
+
+
+--
+-- Name: users_user_user_permissions_permission_id_0b93982e; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX users_user_user_permissions_permission_id_0b93982e ON public.users_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: users_user_user_permissions_user_id_20aca447; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX users_user_user_permissions_user_id_20aca447 ON public.users_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: users_user_username_06e46fe6_like; Type: INDEX; Schema: public; Owner: sergey
+--
+
+CREATE INDEX users_user_username_06e46fe6_like ON public.users_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: comments_comment comments_comment_parent_id_3e0802fb_fk_comments_comment_id; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.comments_comment
+    ADD CONSTRAINT comments_comment_parent_id_3e0802fb_fk_comments_comment_id FOREIGN KEY (parent_id) REFERENCES public.comments_comment(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: comments_comment comments_comment_post_id_96a9ac05_fk_posts_post_id; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.comments_comment
+    ADD CONSTRAINT comments_comment_post_id_96a9ac05_fk_posts_post_id FOREIGN KEY (post_id) REFERENCES public.posts_post(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: comments_comment comments_comment_user_id_a1db4881_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.comments_comment
+    ADD CONSTRAINT comments_comment_user_id_a1db4881_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: likes_likedislike likes_likedislike_content_type_id_79008b70_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.likes_likedislike
+    ADD CONSTRAINT likes_likedislike_content_type_id_79008b70_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: likes_likedislike likes_likedislike_user_id_504213d3_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.likes_likedislike
+    ADD CONSTRAINT likes_likedislike_user_id_504213d3_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: notifications_notification notifications_notifi_content_type_id_74ab3a2c_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.notifications_notification
+    ADD CONSTRAINT notifications_notifi_content_type_id_74ab3a2c_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: notifications_notification notifications_notifi_target_user_id_35babc75_fk_users_use; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.notifications_notification
+    ADD CONSTRAINT notifications_notifi_target_user_id_35babc75_fk_users_use FOREIGN KEY (target_user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: notifications_notification notifications_notification_user_id_b5e8c0ff_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.notifications_notification
+    ADD CONSTRAINT notifications_notification_user_id_b5e8c0ff_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: posts_post posts_post_hub_id_a020a4c0_fk_hub_hub_id; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.posts_post
+    ADD CONSTRAINT posts_post_hub_id_a020a4c0_fk_hub_hub_id FOREIGN KEY (hub_id) REFERENCES public.hub_hub(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: posts_post posts_post_user_id_a4f40dc7_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.posts_post
+    ADD CONSTRAINT posts_post_user_id_a4f40dc7_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_groups users_user_groups_group_id_9afc8d0e_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_group_id_9afc8d0e_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_groups users_user_groups_user_id_5f6f5a90_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_user_id_5f6f5a90_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_user_permissions users_user_user_perm_permission_id_0b93982e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_perm_permission_id_0b93982e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_user_permissions users_user_user_permissions_user_id_20aca447_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sergey
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_permissions_user_id_20aca447_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

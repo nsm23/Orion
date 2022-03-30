@@ -1,0 +1,15 @@
+<li class="list-group-item d-flex justify-content-between px-0">
+    <div class="col-2">
+        <img src="{{ like.user.avatar.url }}" class="w-75 rounded-circle">
+    </div>
+    <div class="col-10">
+        <div>
+          Пользователю <strong><a href="{% url 'users:user_profile' pk=like.user.pk section='user_detail' %}">
+            @{{ like.user.username }}</a></strong>
+            {% if like.vote == -1 %}не{% endif %} понравилась ваша статья
+          <a href="{% url 'posts:detail' slug=like.content_object.slug %}">
+             "{{like.content_object.title}}"
+          </a>
+        </div>
+    </div>
+</li>

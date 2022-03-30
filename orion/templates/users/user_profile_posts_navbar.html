@@ -1,0 +1,28 @@
+<ul class="nav nav-tabs mb-5">
+    <li class="nav-item">
+        <a href="{% url 'users:user_profile' pk=user.pk section='user_posts' %}"
+           class="nav-link {% if section == 'user_posts' %}active link-secondary{% else %}link-dark{% endif %}">
+            Опубликованы
+        </a>
+    </li>
+    {% if request.user == user or request.user.is_superuser %}
+        <li class="nav-item">
+            <a href="{% url 'users:user_profile' pk=user.pk section='user_moderation_posts' %}"
+               class="nav-link {% if section == 'user_moderation_posts' %}active link-secondary{% else %}link-dark{% endif %}">
+                На модерации
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'users:user_profile' pk=user.pk section='user_moderation_declined_posts' %}"
+               class="nav-link {% if section == 'user_moderation_declined_posts' %}active link-secondary{% else %}link-dark{% endif %}">
+                Отклонены
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'users:user_profile' pk=user.pk section='user_drafts' %}"
+               class="nav-link {% if section == 'user_drafts' %}active link-secondary{% else %}link-dark{% endif %}">
+                Черновики
+            </a>
+        </li>
+    {% endif %}
+</ul>

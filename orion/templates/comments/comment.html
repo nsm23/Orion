@@ -1,0 +1,31 @@
+{% load static %}
+<img class="rounded-circle shadow-1-strong me-3" src="{{ comment.user.avatar.url }}" alt="{{ comment.user.username }}" width="65" height="65" />
+{% comment %} <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="{{ comment.user.username }}" width="65" height="65" /> {% endcomment %}
+<div class="flex-grow-1 flex-shrink-1">
+    <div id="comment-{{ comment.id }}">
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="mb-1">
+                {{ comment.user.username }} <span class="small">{{ comment.created_at|date:"d.m.Y H:i" }}</span>
+            </p>
+            {% if user.is_authenticated %}
+                <a href="javascript:void(0);" class="reply-link" data-comment_id="{{ comment.id }}">
+                    <i class="fas fa-reply fa-xs"></i>
+                    <span class="small"> ответить</span>
+                </a>
+            {% endif %}
+        </div>
+        <p class="small mb-0">{{ comment.text|linebreaks }}</p>
+    </div>
+
+    {% with create_comment_form=False reply_to_comment_id=comment.id %}
+        {% include "./form.html" %}
+    {% endwith %}
+
+    {% if comment.replies %}
+        {% for reply_comment in comment.replies.all %}
+            {% with reply_comment=reply_comment %}
+                {% include "./reply.html" %}
+            {% endwith %}
+        {% endfor %}
+    {% endif %}
+</div>

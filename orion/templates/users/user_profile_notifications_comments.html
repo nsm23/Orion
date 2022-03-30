@@ -1,0 +1,23 @@
+<h2 class="mb-3">{{ subtitle }}</h2>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Комментарии</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:user_profile' pk=request.user.id section='user_like_notifications' %}">Оценки</a>
+    </li>
+</ul>
+<ul class="list-group list-group-flush px-0">
+    {% if unread_comments %}
+        <li class="list-group-item"><h3>Непрочитанные комментарии </h3></li>
+        {% for comment in unread_comments %}
+            {% include "users/user_profile_notifications_single.html" with comment=comment mark_as_read=True %}
+        {% endfor %}
+    {% endif %}
+    {% if read_comments %}
+        <li class="list-group-item"><h3>Прочитанные комментарии </h3></li>
+        {% for comment in read_comments %}
+            {% include "users/user_profile_notifications_single.html" with comment=comment %}
+        {% endfor %}
+    {% endif %}
+</ul>

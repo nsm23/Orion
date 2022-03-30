@@ -1,0 +1,26 @@
+{% include "users/user_profile_posts_navbar.html" %}
+
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Статья</th>
+        <th>Причина отклонения</th>
+    </tr>
+    {% for post in posts %}
+        <tr>
+            <td>
+                {{ forloop.counter }}
+            </td>
+            <td>
+                <a href="{% url "posts:detail" slug=post.object.slug %}" class="link-secondary">{{ post.object.title }}</a>
+            </td>
+            <td>
+                {{ post.decline_reason }}
+            </td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="3">Отлично! Ни одной отклоненной статьи нет!</td>
+        </tr>
+    {% endfor %}
+</table>

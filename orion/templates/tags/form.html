@@ -1,0 +1,10 @@
+<div class="form-group">
+    <label>Тэги:</label>
+    <input type="text"
+           data-role="tagsinput"
+           class="form-control"
+           name="tags"
+           {% if form.tags.value %}
+            value="{{form.tags.value|join:' '}}"
+           {% endif %}>
+</div>

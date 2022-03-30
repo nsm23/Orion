@@ -1,0 +1,58 @@
+{% extends "layouts/main.html" %}
+
+{% block title %} Написать статью {% endblock %}
+
+{% block content %}
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="title" class="form-label">Название статьи:</label>
+    <input type="text" class="form-control" id="title" name="title" placeholder="Название"
+           {% if form.title.value %}value="{{form.title.value}}"{% endif %} required>
+  </div>
+  <div class="mb-3">
+    <label for="brief_text" class="form-label">Описание</label>
+    <textarea class="form-control tinymce"
+              id="brief_text"
+              name="brief_text"
+              placeholder="Описание"
+              style="height: 100px;"
+              >{% if form.brief_text.value %}{{form.brief_text.value}}{% endif %}</textarea>
+  </div>
+  <div class="mb-3">
+    <label for="text" class="form-label">Напишите о чём Вы хотите рассказать:</label>
+    <textarea class="form-control tinymce"
+              id="text"
+              name="text"
+              placeholder="Содержание"
+              style="height: 100px;"
+              >{% if form.text.value %}{{form.text.value}}{% endif %}</textarea>
+  </div>
+  <div class="mb-3">
+    <label for="hub" class="form-label">В каком разделе:</label>
+    <select class="form-select" name="hub" id="hub">
+      <option disabled> -- выберите раздел -- </option>
+      {% for hub in hubs %}
+        <option value="{{hub.id}}">{{hub}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-3">
+    {% if post.image %}
+      <img src="{{ post.image.url }}" class="img-fluid">
+    {% endif %}
+    <label for="image" class="form-label">Приложите изображение:</label>
+    <input type="file" class="form-control" id="image" name="image" accept="image/*" value="{{form.image.value}}">
+  </div>
+  {% include 'tags/form.html' %}
+
+  <div class="mb-3">
+    <input class="form-check-input me-1" type="checkbox" {% if form.status.value != "DRAFT" %}checked{% endif %} aria-label="..." name="publish">
+    Опубликовать
+  </div>
+
+  <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+
+{% endblock %}

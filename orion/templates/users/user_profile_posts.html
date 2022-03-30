@@ -1,0 +1,19 @@
+{% include "users/user_profile_posts_navbar.html" %}
+
+<ul class="list-group list-group-flush px-0">
+    {% for post in posts %}
+        <li class="list-group-item d-flex justify-content-between px-0">
+            <div class="col-9">
+                <a href="{% url "posts:detail" slug=post.slug %}" class="link-secondary">{{ post.title }}</a>
+            </div>
+            <div class="col-3">
+                {% if request.user == user or request.user.is_superuser %}
+                    <a href="{% url "posts:edit" slug=post.slug %}" class="btn btn-sm btn-outline-secondary" title="Редактировать">
+                        <i class="bi bi-pencil"></i></a>
+                    <a href="{% url "posts:delete" slug=post.slug %}" class="btn btn-sm btn-outline-danger" title="Удалить">
+                        <i class="bi bi-trash"></i></a>
+                {% endif %}
+            </div>
+        </li>
+    {% endfor %}
+</ul>

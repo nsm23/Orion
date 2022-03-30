@@ -1,0 +1,26 @@
+<section class="comments">
+    <div class="card">
+        <div class="card-body p-4">
+            <h4 class="mb-4 pb-2">Комментарии</h4>
+            <div class="row">
+                <div class="col" id="post-comments">
+                    {% if comments_list %}
+                        {% for comment in comments_list %}
+                            <div class="comments d-flex flex-start{% if not forloop.first %} mt-4{% endif %}">
+                                {% with comment=comment %}
+                                    {% include "./comment.html" %}
+                                {% endwith %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Никто пока не оставил ни одного комментария.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% with create_comment_form=True %}
+            {% include "./form.html" %}
+        {% endwith %}
+    </div>
+</section>

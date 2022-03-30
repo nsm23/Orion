@@ -1,0 +1,35 @@
+{% if user.is_authenticated and not user.is_banned %}
+    {% load static %}
+    <div data-post_id="{{ post.id }}" class="comment-form card-body{% if create_comment_form %} p-4 pt-0{% else %} p-0 d-none reply-form{% endif %}" {% if reply_to_comment_id and not create_comment_form %}id="reply-to-{{ reply_to_comment_id }}-form" data-parent_id={{ reply_to_comment_id }}{% endif %}>
+        <div class="d-flex flex-start w-100">
+            {% comment %} <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(21).webp" alt="avatar" width="65" height="65"> {% endcomment %}
+            <img class="rounded-circle shadow-1-strong me-3" src="{{ user.avatar.url }}" alt="{{ user.username }}" width="65" height="65" />
+            <div class="w-100">
+                <h5>{% if create_comment_form %}Написать комментарий{% else %}Ответить на комментарий{% endif %}</h5>
+                <div class="form-outline">
+                    <textarea class="form-control comments-textarea" rows="4" {% if create_comment_form %}hide-reply="true"{% endif %}></textarea>
+                    <div class="invalid-feedback">
+                        Текст комментария не может быть пустым!
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end mt-3">
+                    <button type="button" class="btn btn-primary btn-comment-save" disabled>
+                        Отправить <i class="fas fa-long-arrow-alt-right ms-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% elif create_comment_form and user.is_banned %}
+    <div class="card-body p-4 pt-0">
+        <div class="alert alert-warning text-danger" role="alert">
+            Вы не можете оставлять комментарии, так как <strong>Ваш профиль был заблокирован</strong>.
+        </div>
+    </div>
+{% elif create_comment_form %}
+    <div class="card-body p-4 pt-0">
+        <div class="alert alert-warning" role="alert">
+            Для того чтобы оставлять комментарии нужно <a href="{% url 'cabinet:login' %}">авторизоваться</a>.
+        </div>
+    </div>
+{% endif %}

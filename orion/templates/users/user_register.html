@@ -1,0 +1,15 @@
+{% extends "layouts/main.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Создание аккаунта{% endblock %}
+
+{% block content %}
+    <h1>Создание аккаунта</h1>
+    <p>Чтобы зарегистрироваться, заполните, пожалуйста, форму:</p>
+    <form action="." method="post">
+        {{ form_reg | crispy }}
+        {% csrf_token %}
+        <p><input type="submit" value="Create my account" class="btn btn-secondary"></p>
+    </form>
+    <p>Если у вас уже есть аккаунт, то <a href="{% url 'cabinet:login' %}">авторизируйтесь</a></p>
+{% endblock %}

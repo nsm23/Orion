@@ -1,0 +1,53 @@
+<div class="row mb-5">
+    <h1 class="col">
+        @{{ user.username }}
+        {% if not user.is_banned %}
+            {% if request.user == user %}
+                <a href="{%  url 'users:user_edit' pk=user.pk %}"
+                   class="btn btn-outline-secondary"
+                   title="Редактировать">
+                    <i class="bi bi-pencil"></i>
+                </a>
+            {% endif %}
+            {% if request.user.is_superuser and not user.is_staff and request.user != user %}
+                <a href="{%  url 'users:set_status' pk=user.pk status='moderator' %}"
+                   class="btn btn-outline-secondary">
+                   Дать права модератора
+                </a>
+            {% endif %}
+            {% if request.user.is_superuser and user.is_staff and request.user != user %}
+                <a href="{%  url 'users:set_status' pk=user.pk status='user' %}"
+                   class="btn btn-outline-secondary">
+                   Забрать права модератора
+                </a>
+            {% endif %}
+        {% endif %}
+        {% if request.user.is_superuser and request.user != user %}
+            {% if not user.is_banned %}
+                <a href="{%  url 'moderation:user_ban' user_id=user.id %}"
+                   class="btn btn-outline-danger">
+                   Заблокировать
+                </a>
+            {% else %}
+                <a href="{%  url 'moderation:user_unban' user_id=user.id %}"
+                   class="btn btn-outline-danger">
+                   Разблокировать
+                </a>
+            {% endif %}
+        {% endif %}
+    </h1>
+    {% if user.is_banned %}
+        <p>
+            <span class="text-danger">Пользователь заблокирован</span>
+        </p>
+    {% elif user.is_superuser %}
+        <p>
+            (администратор)
+        </p>
+    {% elif user.is_staff %}
+        <p>
+            (модератор)
+        </p>
+    {% endif %}
+
+</div>

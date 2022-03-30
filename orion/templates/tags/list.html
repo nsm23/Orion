@@ -1,0 +1,7 @@
+<div style="display:flex">
+    {% for tag in post.tags.all %}
+      <a  href={% url 'posts:tag' slug=tag.slug %} class="btn btn-outline-secondary tag">
+        <span>#{{ tag }}</span>
+      </a>
+    {% endfor %}
+</div>

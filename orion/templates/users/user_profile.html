@@ -1,0 +1,32 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}Личный кабинет @{{ user.username }}{% endblock %}
+
+{% block content %}
+
+    {% include 'users/user_profile_header.html' with user=user%}
+    {% if not user.is_banned %}
+        <div class="row">
+            <div class="col-12 col-md-4">
+                {% include 'users/user_profile_sidebar.html' with user=user%}
+            </div>
+            <div class="col-12 col-md-8">
+                {% if section == 'user_detail' %}
+                    {% include 'users/user_profile_detail.html' %}
+                {% elif section == 'user_posts' %}
+                    {% include 'users/user_profile_posts.html' with subtitle='Публикации пользователя' %}
+                {% elif section == 'user_moderation_posts' %}
+                    {% include 'users/user_profile_posts.html' with subtitle='Публикации на модерации' %}
+                {% elif section == 'user_moderation_declined_posts' %}
+                    {% include 'moderation/posts_declined.html' with subtitle='Отклоненные публикации' %}
+                {% elif section == 'user_drafts' %}
+                    {% include 'users/user_profile_posts.html' with subtitle='Черновики публикаций' %}
+                {% elif section == 'user_comment_notifications' %}
+                    {% include 'users/user_profile_notifications_comments.html' with subtitle='Уведомления' %}
+                {% elif section == 'user_like_notifications' %}
+                    {% include 'users/user_profile_notifications_likes.html' with subtitle='Уведомления' %}
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

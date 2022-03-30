@@ -1,0 +1,126 @@
+body {
+  padding-top: 6rem;
+  background-color: #f3f3f3;
+}
+
+.right-column {
+  top: 6rem;
+}
+
+.navbar {
+  background-color: #fff;
+}
+
+.card a{
+  text-decoration: none;
+  color: inherit;
+  transition: color 2s;
+}
+
+.card a:hover{
+  color: #7030c0;
+  transition: color 0.3s;
+}
+
+.card {
+  transition: box-shadow 2s;
+}
+
+.card:hover{
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  transition: box-shadow 0.3s;
+}
+
+.author-link {
+  padding: 0 5px 0 5px;
+  z-index: 2;
+}
+
+.post-list .card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+
+@media (min-width:1400px) {
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl,
+  .container-xxl {
+    max-width:1140px;
+  }
+}
+
+.navbar .bi {
+  font-size: 1.5rem;
+}
+
+.navbar a .bi {
+  color: rgba(0,0,0,.55);
+}
+
+.navbar a:hover .bi {
+  color: rgba(0,0,0,.7);
+}
+
+.like-panel {
+  margin: 10px;
+}
+
+.btn-like{
+  width: 75px;
+}
+
+.btn-dislike {
+  width: 50px;
+}
+
+.likes-total{
+  border: none;
+  display: inline;
+  font-family: inherit;
+  font-size: inherit;
+  padding: none;
+  width: auto;
+  background-color: inherit;
+  width: 15px;
+}
+
+.speech-button {
+  background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+}
+
+.fa {
+  margin-left: -12px;
+  margin-right: 8px;
+}
+
+a.profile-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.profile-link-group {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.tag{
+  padding: 0px 5px 0px 5px;
+  margin: 5px;
+}
+
+.tag-search-result {
+  font-size: 1.25rem;
+  padding: 10px;
+}
+
+#loginform-link{
+  margin-left: 20px;
+}
