@@ -140,7 +140,7 @@ const moderationNotificationTemplate = obj => {
     if (obj.content_type === "post") {
         if (obj.decision === "APPROVE") {
             icon = "<i class=\"bi bi-check-lg\"></i>";
-            text = `Ваща публикация "${obj.text}" была одобрена.`;
+            text = `Ваша публикация "${obj.text}" была одобрена.`;
             className = "text-success";
         }
         else if (obj.decision === "DECLINE") {
@@ -160,7 +160,7 @@ const moderationNotificationTemplate = obj => {
                 ${ text }
             </div>
             <div class="col-2 d-flex flex-column justify-content-center">
-                <a title="Прочитано" data-is-read="false" data-object-id="${ obj.object_id }" class="btn btn-sm btn-outline-secondary m-1">
+                <a title="Прочитано" data-is-read="false" data-object-id="${ obj.id }" class="btn btn-sm btn-outline-secondary m-1">
                     <i class="bi bi-check-circle-fill mark-as-read" style="font-size: 1rem"></i>
                 </a>
                 <a href="${ NOTIFICATION_SET_READ_AND_REDIRECT_URL.replace('{{id}}',obj.object_id).replace('{{model}}', obj.content_type) }"
@@ -209,6 +209,7 @@ const generateNoificationsBar = (params) => {
     let likes = params.likes || [];
     let moderation_acts = params.moderation_acts || [];
     let current_user_id = params.current_user_id;
+    let complaints = params.complaints || [];
 
     if (notifications_count > 0)
         notificationsCounterSpan.textContent = notifications_count;
@@ -231,6 +232,14 @@ const generateNoificationsBar = (params) => {
         notificationsUl.innerHTML += "<h5 class='mt-3'>Модерация</h5>";
         for (let act of moderation_acts)
             notificationsUl.innerHTML += moderationNotificationTemplate(act);
+    }
+    if (complaints.length > 0) {
+        notificationsUl.innerHTML += "<h5 class='mt-3'>Новые жалобы</h5>";
+
+        for (let complaint of complaints) {
+            let complaintLi = complaintNotificationTemplate(complaint);
+            notificationsUl.innerHTML += complaintLi;
+        }
     }
     notificationsUl.innerHTML += AllNotificationsLinkTemplate(current_user_id);
 }
@@ -272,6 +281,7 @@ const getNotifications = () => {
                     likes: response["likes"],
                     moderation_acts: response["moderation_acts"],
                     current_user_id: response["current_user_id"],
+                    complaints: response["complaints"],
                 });
                 generateModerationNotificationBar(
                     response["posts_to_moderate_count"],
@@ -292,6 +302,32 @@ const getNotifications = () => {
             }
         )
         .catch()
+}
+
+const complaintNotificationTemplate = complaint => {
+    return `
+        <li class="row mb-2">
+            <div class="col-2 text-center py-2">
+                <img class="w-75 rounded-circle" src="${ complaint.user_avatar_url }">
+            </div>
+            <div class="col-8">
+                <a href="${ USER_PROFILE_URL.replace('{{id}}', complaint.user_id) }" class="text-dark">
+                    @${ complaint.username }</a>
+                <div>${ complaint.text }</div>
+            </div>
+            <div class="col-2 d-flex flex-column justify-content-center">
+                <a title="Отметить как прочитано" class="btn btn-sm btn-outline-secondary m-1"
+                    data-is-read="false" data-object-id="${ complaint.complaint_id }">
+                        <i class="bi bi-check-circle-fill mark-as-read" style="font-size: 1rem"></i>
+                </a>
+                <a href="${ NOTIFICATION_SET_READ_AND_REDIRECT_URL.replace('{{id}}',complaint.post_id).replace('{{model}}', 'complaint') }"
+                    class="btn btn-sm btn-outline-secondary m-1"
+                    title="Перейти к статье">
+                        <i class="bi bi-box-arrow-up-right" style="font-size: 1rem"></i>
+                </a>
+            </div>
+        </li>
+    `
 }
 
 

@@ -1,0 +1,19 @@
+<li class="list-group-item d-flex justify-content-between px-0">
+    <div class="col-2">
+        <img src="{{ complaint.user.avatar.url }}" class="w-50 rounded-circle">
+    </div>
+    <div class="col-10">
+        <div>
+          Жалоба от пользователя <strong>
+            <a href="{% url 'users:user_profile' pk=complaint.user.pk section='user_detail' %}">
+              @{{ complaint.user.username }}
+            </a>
+          </strong>
+          на статью
+          <a href="{% url 'posts:detail' slug=complaint.content_object.slug %}">
+             {{ complaint.content_object.title}}
+          </a>
+          <div>{{complaint.text}}"</div>
+        </div>
+    </div>
+</li>

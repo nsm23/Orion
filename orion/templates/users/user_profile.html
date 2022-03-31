@@ -25,6 +25,8 @@
                     {% include 'users/user_profile_notifications_comments.html' with subtitle='Уведомления' %}
                 {% elif section == 'user_like_notifications' %}
                     {% include 'users/user_profile_notifications_likes.html' with subtitle='Уведомления' %}
+                {% elif section == 'user_complaint_notifications' %}
+                    {% include 'users/user_profile_notifications_complaints.html' with subtitle='Уведомления' %}
                 {% endif %}
             </div>
         </div>

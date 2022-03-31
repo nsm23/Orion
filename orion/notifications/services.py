@@ -5,6 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models import Model, QuerySet
 from django.utils import dateformat, timezone
 
+from complaints.models import Complaint
 from .models import Notification
 
 
@@ -18,6 +19,17 @@ def generate_response_comments(comments, limit: int) -> List[Dict[str, Any]]:
         'created_at': format_datetime_with_system_timezone(comment.created_at, 'd.m.Y H:i'),
         'comment_id': comment.id,
     } for comment in comments[:limit]]
+
+
+def generate_response_complaints(complaints, limit: int) -> List[Dict[str, Complaint]]:
+    return [{
+        'user_id': complaint.user.id,
+        'username': complaint.user.username,
+        'user_avatar_url': complaint.user.avatar.url,
+        'post_id': complaint.content_object.id,
+        'text': complaint.text,
+        'complaint_id': complaint.id,
+    } for complaint in complaints[:limit]]
 
 
 def generate_response_likes(likes, limit: int) -> List[Dict[str, Any]]:
@@ -34,6 +46,7 @@ def generate_response_likes(likes, limit: int) -> List[Dict[str, Any]]:
 
 def generate_response_moderation_actions(moderation_actions, limit: int) -> List[Dict[str, Any]]:
     return [{
+        'id': mod.id,
         'object_id': mod.object_id,
         'content_type': mod.content_type.model,
         'decision': mod.decision,

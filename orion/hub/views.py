@@ -28,7 +28,7 @@ class MainView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if hasattr(self, 'search_keys'):
+        if hasattr(self, 'search_keys') and self.search_keys:
             search_fields = ', '.join(self.search_keys)
             context['search_field'] = search_fields
             context['page_title'] = 'Поиск по ключевым словам' + search_fields

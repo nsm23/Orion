@@ -268,9 +268,66 @@ function speech() {
 }
 
 
+function complaint_save() {
+  const complaint_form = $('div.complaint-form')
+  const post_id = complaint_form.data('post_id') ?? 0
+  const complaint_text = $('.complaint-textarea')
+  const submit_btn = $('.btn-complaint-save')
+  const data = {
+    text: complaint_text.val(),
+    post: post_id,
+    csrfmiddlewaretoken: Cookies.get('csrftoken'),
+  }
+
+  $.ajax({
+    url: '/complaints/save/',
+    method: 'post',
+    data: data,
+    error: function (jqXHR, error, errorThrown) {
+        if (jqXHR.status && jqXHR.status == 400) {
+            alert(jqXHR.responseText);
+        } else {
+            alert("Something went wrong")
+        }
+    },
+    success: function (json) {
+        complaint_text.val('')
+        const success_message = $(`
+          <div class="alert alert-success complaint-success" role="alert">
+            Ваша жалоба успешно принята
+          </div>
+        `)
+        $('.complaint-container').append(success_message)
+        $('button.complaint-toggle').css('display', 'block')
+        $('.complaint-form').css('display', 'none')
+    }
+  });
+}
+
+function complaint_toggle() {
+  $('button.complaint-toggle').css('display', 'none')
+  $('.complaint-form').css('display', 'block')
+  if ($('.complaint-success').length){
+    $('.complaint-success').remove()
+  }
+}
+
+validate_complaint_text = function() {
+    var complaint_text = $('.complaint-textarea').val() ?? ''
+
+    var invalid = false
+    if ($.trim(complaint_text) == '') {
+        invalid = true
+    }
+    $('.btn-complaint-save').attr('disabled', invalid)
+}
+
 // Подключение обработчиков
 $(function () {
     $('[data-action="like"]').click(like);
     $('[data-action="dislike"]').click(dislike);
     $('[data-action="speech"]').click(speech);
+    $('button.complaint-toggle').click(complaint_toggle);
+    $('button.btn-complaint-save').click(complaint_save);
+    $('.complaint-textarea').bind('input propertychange', validate_complaint_text)
 });

@@ -22,6 +22,9 @@
                     {% if request.user == post.user %}
                         <li><a href="{% url 'posts:edit' slug=post.slug %}" class="dropdown-item">
                             Редактировать</a></li>
+                    {% else %}
+                        <li><a href="{% url 'posts:edit' slug=post.slug %}" class="dropdown-item">
+                            Редактировать</a></li>
                     {% endif %}
                     {% if post.status == 'ON MODERATION' %}
                         <li><a class="dropdown-item post-approve-link" data-post-id="{{ post.id }}" href="#">
@@ -61,6 +64,10 @@
 
     {#  POST TAG LIST  #}
     {% include "tags/list.html" with tags=object.tags.all %}
+
+    {#  COPMLAINTS  #}
+    {% include "complaints/form.html" with form='complaint_form' %}
+
    {#  TEXT VOICEOVER  #}
       <button id="speech-button"
               class="speech-button"

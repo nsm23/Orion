@@ -6,8 +6,9 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import require_http_methods
 from django.urls import reverse, reverse_lazy
 
+from complaints.models import Complaint
 from .services import (get_notifying_object, generate_response_comments, generate_response_likes,
-                       generate_response_moderation_actions, generate_response_posts)
+                       generate_response_moderation_actions, generate_response_posts, generate_response_complaints)
 from comments.models import Comment
 from likes.models import LikeDislike
 from moderation.models import Moderation
@@ -16,6 +17,7 @@ from posts.models import Post
 from users import permission_services
 
 COMMENT_NOTIFICATIONS_NUMBER_TO_SHOW = 3
+COMPLAINT_NOTIFICATIONS_NUMBER_TO_SHOW = 3
 LIKES_NOTIFICATIONS_NUMBER_TO_SHOW = 3
 POST_TO_MODERATOR_NUMBER_TO_SHOW = 3
 POST_MODERATION_RESULT_NUMBER_TO_SHOW = 3
@@ -31,6 +33,7 @@ def get_notifications(request):
     comments = get_notifying_object(notifications, Comment, '-modified_at')
     likes = get_notifying_object(notifications, LikeDislike)
     moderation_actions = get_notifying_object(notifications, Moderation, '-date')
+    complaints = get_notifying_object(notifications, Complaint)
 
     response_notifications = {}
     if permission_services.has_moderator_permissions(request.user):
@@ -51,11 +54,14 @@ def get_notifications(request):
     response_likes = generate_response_likes(likes, LIKES_NOTIFICATIONS_NUMBER_TO_SHOW)
     response_moderation_actions = generate_response_moderation_actions(moderation_actions,
                                                                        POST_TO_MODERATOR_NUMBER_TO_SHOW)
+    response_complaints = generate_response_complaints(complaints, COMPLAINT_NOTIFICATIONS_NUMBER_TO_SHOW)
+
     return JsonResponse(dict({
         'comments': response_comments,
         'likes': response_likes,
         'moderation_acts': response_moderation_actions,
-        'notifications_count': len(comments) + len(likes) + len(moderation_actions),
+        'complaints': response_complaints,
+        'notifications_count': len(comments) + len(likes) + len(moderation_actions) + len(complaints),
         'current_user_id': request.user.id
     }, **response_notifications))
 
@@ -82,7 +88,7 @@ def mark_as_read_and_redirect(request, object_id, object_model):
     if object_model == 'likedislike':
         like = get_object_or_404(LikeDislike, pk=object_id)
         return redirect(reverse('posts:detail', kwargs={'slug': like.content_object.slug}))
-    if object_model == 'post':
+    if object_model in ['post', 'complaint']:
         post = get_object_or_404(Post, pk=object_id)
         return redirect(reverse('posts:detail', kwargs={'slug': post.slug}))
     raise Http404

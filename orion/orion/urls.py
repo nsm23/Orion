@@ -11,10 +11,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include('posts.urls', namespace='posts')),
     path('comments/', include('comments.urls', namespace='comments')),
+    path('complaints/', include('complaints.urls', namespace='complaints')),
     path('cabinet/', include('users.urls', namespace='cabinet')),
     path('notifications/', include('notifications.urls', namespace='notifications')),
     path('moderation/', include('moderation.urls', namespace='moderation')),
-    path('', include('likes.urls', namespace='likes'))
+    path('', include('likes.urls', namespace='likes')),
+    path('', include('social_django.urls', namespace='social')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,10 +1,12 @@
-% extends "layouts/main.html" %}
 {% load hitcount_tags %}
 
-{% block content %}
-  Popular Posts
-  {% for p in popular_posts %}
-  {{p.title}}
-  {% endfor %}
-{% endblock %}
-
+ <div class="list-group">
+    <h5>Популярные статьи</h5>
+    {% for p in popular_posts %}
+  <a href="{% url 'posts:detail' slug=p.slug %}"
+     class="list-group-item list-group-item-action"
+     aria-current="true">
+{{ p.title }}
+  </a>
+    {% endfor %}
+</div>

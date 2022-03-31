@@ -13,12 +13,5 @@ urlpatterns = [
     path('speech/<slug:slug>', views.text_to_voice_view, name='speech'),
     path('<slug:slug>', views.PostDetailView.as_view(), name='detail'),
     path('tag/<slug:slug>', views.ListTagView.as_view(), name='tag'),
-
-    path('create/', PostCreateView.as_view(), name='create-post'),
     path('hitcount/', include(('hitcount.urls', 'hitcount'), namespace='hitcount')),
-    path('edit/<slug:slug>', PostUpdateView.as_view(), name='edit'),
-    path('delete/<slug:slug>', PostDeleteView.as_view(), name='delete'),
-    path('speech/<slug:slug>', text_to_voice_view, name='speech'),
-    path('<slug:slug>/', PostDetailView.as_view(), name='detail'),
-
 ]

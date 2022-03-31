@@ -1,0 +1,26 @@
+<h2 class="mb-3">{{ subtitle }}</h2>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:user_profile' pk=request.user.id section='user_comment_notifications' %}">Комментарии</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:user_profile' pk=request.user.id section='user_like_notifications' %}">Оценки</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Жалобы</a>
+    </li>
+</ul>
+<ul class="list-group list-group-flush px-0">
+    {% if unread_complaints %}
+        <li class="list-group-item"><h3>Непрочитанные жалобы </h3></li>
+        {% for complaint in unread_complaints %}
+            {% include "users/user_profile_notification_complaint.html" with complaint=complaint mark_as_read=True %}
+        {% endfor %}
+    {% endif %}
+    {% if read_complaints %}
+        <li class="list-group-item"><h3>Прочитанные жалобы </h3></li>
+        {% for complaint in read_complaints %}
+            {% include "users/user_profile_notification_complaint.html" with complaint=complaint %}
+        {% endfor %}
+    {% endif %}
+</ul>

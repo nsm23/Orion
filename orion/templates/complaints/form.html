@@ -1,0 +1,30 @@
+
+<div class="complaint-container">
+    <button class="complaint-toggle btn btn-outline-danger m-3">
+        Пожаловаться
+    </button>
+
+    <div data-post_id="{{ post.id }}"
+         class="complaint-form m-3"
+         style="display: none;">
+        <div class="mt-5 mb-3">
+            <h5>Составить жалобу</h5>
+
+            <div class="form-group mb-3">
+              <label>Причина</label>
+              <textarea class="form-control complaint-textarea"
+                        rows="4"></textarea>
+            </div>
+
+            <div class="d-flex justify-content-end mt-3">
+                <button type="button"
+                        class="btn btn-primary btn-complaint-save"
+                        disabled>
+                  Отправить
+                  <i class="fas fa-long-arrow-alt-right ms-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

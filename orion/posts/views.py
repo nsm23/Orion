@@ -14,10 +14,12 @@ from gtts import gTTS
 from hitcount.views import HitCountDetailView
 from pytils.translit import slugify
 
+from complaints.forms import ComplaintForm
 from hub.models import Hub
 from likes.models import LikeDislike
 from notifications.models import Notification
 from posts.models import Post
+from complaints.models import Complaint
 from users.permission_services import has_common_user_permission
 
 
@@ -39,6 +41,7 @@ class PostDetailView(HitCountDetailView):
         context = super().get_context_data(**kwargs)
         context['comments_list'] = self.object.comments.filter(active=True, parent__isnull=True)
         context['likes_count'] = self.object.votes.sum_rating()
+        context['complaint_form'] = ComplaintForm
         context.update({'popular_posts': Post.objects.order_by('-hit_count_generic__hits')[:5]})
         if self.request.user != AnonymousUser():
             try:
@@ -58,7 +61,7 @@ class PostCreateView(PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
         self.object = form.save()
         publish = 'publish' in self.request.POST
-        if publish and self.request.user.rating >= Post.MIN_USER_RATING_TO_PUBLISH:
+        if publish and self.request.user.rating >= Post.MIN_USER_RATING_TO_PUBLISH or self.request.user.is_staff:
             action = 'publish'
             self.object.status = Post.ArticleStatus.ACTIVE
             redirect_name, section = 'main', None

@@ -12,5 +12,15 @@
         <input type="hidden" name="next" value="{{ next }}">
         <p><input type="submit" value="login" class="btn btn-secondary"></p>
     </form>
-    <p>Если у вас еще нет аккаунта, то <a href="{% url 'cabinet:register' %}">зарегистрируйтесь</a></p>
+        <a class="btn btn-primary" href="{% url 'cabinet:register' %}">Registration
+        </a>
+    {# АУТОНТИФИКАЦИЯ С ПОМОЩЬЮ VK #}
+    <div class="social">
+        Войти с помощью:
+        <a
+           href="{% url 'social:begin' 'vk-oauth2' %}?next=/">
+            <img src="{% static '/img/VK-logo.png' %}" class="img-fluid social-logo" alt="VK">
+        </a>
+    </div>
+
 {% endblock %}

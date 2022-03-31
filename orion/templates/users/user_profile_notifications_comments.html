@@ -6,6 +6,9 @@
     <li class="nav-item">
         <a class="nav-link" href="{% url 'users:user_profile' pk=request.user.id section='user_like_notifications' %}">Оценки</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:user_profile' pk=request.user.id section='user_complaint_notifications' %}">Жалобы</a>
+    </li>
 </ul>
 <ul class="list-group list-group-flush px-0">
     {% if unread_comments %}

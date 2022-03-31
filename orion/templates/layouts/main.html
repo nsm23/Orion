@@ -1,4 +1,5 @@
 {% load static %}
+{% load hitcount_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,6 +33,8 @@
             </div>
             <div class="col-md-3 sticky-top h-100 right-column d-none d-md-flex">
                 <img src="{% static '/img/orion_banner.png' %}" class="img-fluid" alt="...">
+<p></p>
+            {% include 'posts/post_statistics.html' %}
                 {% comment %}
                 <h6 class="text-muted text-center">RIGHT COLUMN<h6> {% endcomment %}</h6>
             </div>

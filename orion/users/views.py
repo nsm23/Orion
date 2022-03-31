@@ -9,6 +9,7 @@ from django.views.generic import DetailView, UpdateView
 from django.urls import reverse, reverse_lazy
 
 from comments.models import Comment
+from complaints.models import Complaint
 from likes.models import LikeDislike
 from moderation.models import Moderation
 from notifications.models import Notification
@@ -68,6 +69,21 @@ class UserProfileView(PermissionRequiredMixin, DetailView):
 
             decline_reasons = {m.object_id: m.comment for m in moderations}
             kwargs['posts'] = [{'object': post, 'decline_reason': decline_reasons.get(post.id)} for post in posts]
+
+        elif section == 'user_complaint_notifications':
+            read_complaints = Notification.objects.filter(
+                target_user=user,
+                content_type__model='complaint',
+                status=Notification.NotificationStatus.READ,
+            )
+            unread_complaints = Notification.objects.filter(
+                target_user=user,
+                content_type__model='complaint',
+                status=Notification.NotificationStatus.UNREAD,
+            )
+
+            kwargs['read_complaints'] = Complaint.objects.filter(id__in=[el.object_id for el in read_complaints])
+            kwargs['unread_complaints'] = Complaint.objects.filter(id__in=[el.object_id for el in unread_complaints])
 
         elif section == 'user_comment_notifications':
             notifications = Notification.objects.filter(target_user=user)

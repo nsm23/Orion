@@ -6,7 +6,7 @@ from tinymce.widgets import TinyMCE
 
 class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
-    list_display = ['title', 'status', 'user', 'hit_count_generic']
+    list_display = ['title', 'status', 'user']
     formfield_overrides = {
         models.TextField: {'widget': TinyMCE()}
     }
